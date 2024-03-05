@@ -1,0 +1,49 @@
+﻿@using PrivateLibrary.Data.Models;
+@model Book
+@{
+    ViewData["Title"] = "Add a Request";
+}
+
+<form id="AddBookForm" method="post">
+    <div>
+        <div class="text-lg-start" style="padding-bottom: 20px;">
+            <label style="padding-left: 10px;" asp-for="@Model.Title"></label>
+            <input class="form-control" aria-required="true" asp-for="@Model.Title" />
+            <span asp-validation-for="@Model.Title" class="text-danger"></span>
+        </div>
+
+        <div class="text-lg-start" style="padding-bottom: 20px;">
+            <label style="padding-left: 10px;" asp-for="@Model.Author"></label>
+            <input class="form-control" aria-required="true" asp-for="@Model.Author" />
+            <span asp-validation-for="@Model.Author" class="text-danger"></span>
+        </div>
+
+        <div class="text-lg-start" style="padding-bottom: 20px;">
+            <label style="padding-left: 10px;" asp-for="@Model.ISBN"></label>
+            <input type="text" class="multiline-input" aria-required="true" asp-for="@Model.ISBN" />
+            <span asp-validation-for="@Model.ISBN" class="text-danger"></span>
+        </div>
+
+        <div class="text-lg-start" style="padding-bottom: 20px;">
+            <label style="padding-left: 10px;" asp-for="@Model.CostPerDay"></label>
+            <input type="text" class="multiline-input" aria-required="true" asp-for="@Model.CostPerDay" />
+            <span asp-validation-for="@Model.CostPerDay" class="text-danger"></span>
+        </div>
+
+        <div class="text-lg-start" style="padding-bottom: 20px;">
+            <label style="padding-left: 10px;" asp-for="@Model.Image"></label>
+            <input type="text" class="multiline-input" aria-required="true" asp-for="@Model.Image" />
+            <span asp-validation-for="@Model.Image" class="text-danger"></span>
+        </div>
+    </div>
+
+    @* <div style="padding-bottom: 20px">
+        <label>Categories</label>
+        @foreach (var item in Model.Request.Categories)
+        {
+            <input type="checkbox" checked="@(Model.Request.CategoryIds.Contains(item.Id))" value="@item.Id" name="Request.CategoryIds" />
+            <label>@item.Name</label>
+        }
+    </div> *@
+    <button class="btn btn-danger" stype="width:130px" asp-action="Add" asp-controller="Book">Add</button>
+</form>

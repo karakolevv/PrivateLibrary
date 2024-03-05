@@ -1,0 +1,43 @@
+﻿@using PrivateLibrary.Data.Models;
+@model ICollection<Book>
+
+<div>
+    <a asp-controller="Book" asp-action="Add" class="btn btn-success "> <i class="bi bi-person-dash-fill"></i>Add</a>
+</div>
+@foreach (var book in Model)
+{
+    <div class="card" style=" padding: 25px 25px 25px 25px;">
+        <div class="container" style">
+            <div class="row">
+                <div class="col-12 d-flex justify-content-center">
+                    <h4>
+                        <b>
+                            <text>@book.Title</text>
+                        </b>
+                    </h4>                  
+                </div>
+            </div>
+
+            <p>
+                <img src="@book.Image" />
+            </p>
+
+            <p>
+                Author: @book.Author
+
+            </p>
+
+            <p>
+                IsTaken: @book.IsTaken
+
+            </p>
+
+            <p>
+                Cost: @book.CostPerDay
+
+            </p>
+
+            <a asp-controller="Book" asp-action="Details" asp-route-id="@book.Id" class="btn btn-danger "> <i class="bi bi-person-dash-fill"></i>Details</a>
+        </div>
+    </div>
+}

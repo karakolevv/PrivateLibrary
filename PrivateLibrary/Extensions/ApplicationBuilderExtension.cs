@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using PrivateLibrary.Data.Models;
 
 namespace PrivateLibrary.Extensions
 {
@@ -21,21 +22,25 @@ namespace PrivateLibrary.Extensions
                     await roleManager.CreateAsync(adminRole);
                 }
 
-                if (!await roleManager.RoleExistsAsync("BaseUser"))
+                if (!await roleManager.RoleExistsAsync("Employee"))
                 {
-                    IdentityRole userRole = new IdentityRole("BaseUser");
-                    await roleManager.CreateAsync(userRole);
+                    IdentityRole agentRole = new IdentityRole("Employee");
+                    await roleManager.CreateAsync(agentRole);
                 }
 
-                ApplicationUser admin = await userManager.FindByNameAsync("Spiridon");
-                await userManager.AddToRoleAsync(admin, "Admin");
+                if (!await roleManager.RoleExistsAsync("Reader"))
+                {
+                    IdentityRole clientRole = new IdentityRole("Reader");
+                    await roleManager.CreateAsync(clientRole);
+                }
 
-                ApplicationUser user = await userManager.FindByNameAsync("ivan");
-                await userManager.AddToRoleAsync(user, "BaseUser");
+                ApplicationUser? admin = await userManager.FindByNameAsync("admin");
+                await userManager.AddToRoleAsync(admin, "Admin");
             })
             .GetAwaiter()
             .GetResult();
 
             return app;
         }
+    }
 }

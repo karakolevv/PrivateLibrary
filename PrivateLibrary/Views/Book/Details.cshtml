@@ -1,0 +1,40 @@
+﻿﻿@using PrivateLibrary.Data.Models;
+@model Book
+
+<div>
+    <div class="card" style=" padding: 25px 25px 25px 25px;">
+        <div class="container">
+            <h4>
+                <b>
+                    @Model.Title
+                </b>
+            </h4>
+
+            <p>
+                Author: @Model.Author
+            </p>
+
+            <p>
+                IsTaken: @Model.IsTaken
+            </p>
+
+            <p>
+                Cost: @Model.CostPerDay
+            </p>
+
+            <p>
+                ISBN: @Model.ISBN
+            </p>
+
+            @if (User.IsInRole("Admin"))
+            {
+                <a asp-controller="Book" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-success "> <i class="bi bi-person-dash-fill"></i>Edit</a>
+                <a asp-controller="Book" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger "> <i class="bi bi-person-dash-fill"></i>Delete</a>
+            }
+            @if (User.IsInRole("Reader"))
+            {
+                <a asp-controller="Book" asp-action="Take" asp-route-id="@Model.Id" class="btn btn-danger "> <i class="bi bi-person-dash-fill"></i>Take</a>
+            }
+        </div>
+    </div>
+</div>

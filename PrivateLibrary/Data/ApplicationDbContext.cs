@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using PrivateLibrary.Data.Configurations;
 using PrivateLibrary.Data.Models;
 
 namespace PrivateLibrary.Data
