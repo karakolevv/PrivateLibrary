@@ -18,10 +18,28 @@ namespace PrivateLibrary.Controllers
             _userManager = userManager;
         }
 
-        public async Task<IActionResult> Index()
+        [HttpGet]
+        public IActionResult Index(string search)
         {
-            var books = await _context.Books.ToListAsync();
-            return View(books);
+            var books = _context.Books.AsQueryable();
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                ViewBag.Search = search;
+                books = books.Where(book => book.Title.Contains(search));
+            }
+
+            return View(books.ToList());
+        }
+
+        [HttpGet]
+        public JsonResult AutoComplete(string search)
+        {
+            var books = _context.Books
+                .Where(book => book.Title.Contains(search))
+                .Select(book => book.Title);
+
+            return Json(books);
         }
 
         public async Task<IActionResult> Details(int id)
@@ -76,7 +94,6 @@ namespace PrivateLibrary.Controllers
             book.IsTaken = true;
             await _context.SaveChangesAsync();
 
-            //TODO: moje bi da e konstanta¿
             int numberOfDays = 14;
             var currentUser = await _userManager.GetUserAsync(User);
 

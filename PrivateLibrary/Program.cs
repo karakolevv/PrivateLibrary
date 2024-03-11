@@ -26,7 +26,6 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 
 builder.Services.AddControllersWithViews();
 
-
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
