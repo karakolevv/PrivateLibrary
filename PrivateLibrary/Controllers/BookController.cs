@@ -19,7 +19,7 @@ namespace PrivateLibrary.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index(string search)
+        public async Task<IActionResult> Index(string search)
         {
             var books = _context.Books.AsQueryable();
 
@@ -29,22 +29,25 @@ namespace PrivateLibrary.Controllers
                 books = books.Where(book => book.Title.Contains(search));
             }
 
-            return View(books.ToList());
+            return View(await books.ToListAsync() ?? throw new ArgumentNullException(nameof(search)));
         }
 
         [HttpGet]
-        public JsonResult AutoComplete(string search)
+        public async Task<IActionResult> AutoComplete(string search)
         {
-            var books = _context.Books
+            var books = await _context.Books
                 .Where(book => book.Title.Contains(search))
-                .Select(book => book.Title);
+                .Select(book => book.Title).ToListAsync()
+                ?? throw new ArgumentNullException(nameof(search));
 
             return Json(books);
         }
 
         public async Task<IActionResult> Details(int id)
         {
-            var book = await _context.Books.FirstOrDefaultAsync(b => b.Id == id);
+            var book = await _context.Books.FirstOrDefaultAsync(b => b.Id == id)
+                ?? throw new ArgumentNullException(nameof(id));
+
             return View(book);
         }
 
@@ -57,45 +60,57 @@ namespace PrivateLibrary.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(Book book)
         {
+            if (!ModelState.IsValid)
+                throw new ArgumentNullException(nameof(book));
+
             _context.Books.Add(book);
             await _context.SaveChangesAsync();
 
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            var book = await _context.Books.FirstOrDefaultAsync(b => b.Id == id);
+            var book = await _context.Books.FirstOrDefaultAsync(b => b.Id == id)
+                ?? throw new ArgumentNullException(nameof(id));
+
             return View(book);
         }
 
         [HttpPost]
         public async Task<IActionResult> Edit(Book book)
         {
+            if (!ModelState.IsValid)
+                throw new ArgumentNullException(nameof(book));
+
             _context.Books.Update(book);
             await _context.SaveChangesAsync();
 
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> Delete(int id)
         {
-            var book = await _context.Books.FirstOrDefaultAsync(b => b.Id == id);
+            var book = await _context.Books.FirstOrDefaultAsync(b => b.Id == id)
+                ?? throw new ArgumentNullException(nameof(id));
+
             _context.Books.Remove(book);
             await _context.SaveChangesAsync();
 
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> Take(int id)
         {
-            var book = await _context.Books.FirstOrDefaultAsync(b => b.Id == id);
+            var book = await _context.Books.FirstOrDefaultAsync(b => b.Id == id) 
+                ?? throw new ArgumentNullException(nameof(id));
+
             book.IsTaken = true;
-            await _context.SaveChangesAsync();
 
             int numberOfDays = 14;
-            var currentUser = await _userManager.GetUserAsync(User);
+            var currentUser = await _userManager.GetUserAsync(User)
+                ?? throw new ArgumentNullException(nameof(id));
 
             var takenBook = new TakenBook()
             {
@@ -111,7 +126,7 @@ namespace PrivateLibrary.Controllers
             await _context.SaveChangesAsync();
 
             //TODO: da ne te prashta kum tuka
-            return RedirectToAction("Index", "TakenBook");
+            return RedirectToAction(nameof(Index), "TakenBook");
         }
     }
 }

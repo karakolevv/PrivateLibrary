@@ -59,7 +59,7 @@ namespace PrivateLibrary.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
+        [Authorize(Roles = "Admin")]
         public IActionResult RegisterEmployee()
         {
             EmployeeRegisterViewModel model = new();
@@ -67,7 +67,7 @@ namespace PrivateLibrary.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> RegisterEmployee(EmployeeRegisterViewModel model)
         {
             if (!ModelState.IsValid)
