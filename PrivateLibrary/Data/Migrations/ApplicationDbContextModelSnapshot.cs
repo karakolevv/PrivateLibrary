@@ -265,6 +265,108 @@ namespace PrivateLibrary.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Books");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Author = "Иван Вазов",
+                            CostPerDay = 4.0,
+                            ISBN = "9786192510244",
+                            Image = "https://cdn.ozone.bg/media/catalog/product/cache/1/image/400x498/a4e40ebdc3e371adff845072e1c73f37/p/o/19071533ecfae7e0bc6c0df761f2b77a/pod-igoto-helikon-chervena-koritsa-30.jpg",
+                            IsTaken = false,
+                            Title = "Под игото"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Author = "Кристина Кръстева",
+                            CostPerDay = 5.0,
+                            ISBN = "9789543985289",
+                            Image = "https://i2.helikon.bg/products/8656/20/208656/208656_b.jpg?t=1711110871",
+                            IsTaken = false,
+                            Title = "Бойко, който винаги се завръща"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Author = "Слави Панайотов",
+                            CostPerDay = 7.0,
+                            ISBN = " 9786197511017",
+                            Image = "https://cdn.ozone.bg/media/catalog/product/cache/1/image/400x498/a4e40ebdc3e371adff845072e1c73f37/t/o/e563b1cc68b7a08799821bf41c795b65/top-misteriite-na-balgariya-30.jpg",
+                            IsTaken = false,
+                            Title = "Топ мистериите на България"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Author = "Сергей Станишев",
+                            CostPerDay = 2.0,
+                            ISBN = "9789549232813",
+                            Image = "https://knizhen-pazar.net/books/115/11511/1151187.jpg?size=23008",
+                            IsTaken = false,
+                            Title = "Защото сме социалисти"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Author = "Николай Хайтов",
+                            CostPerDay = 5.0,
+                            ISBN = " 9789540904382",
+                            Image = "https://cdn.ozone.bg/media/catalog/product/cache/1/image/400x498/a4e40ebdc3e371adff845072e1c73f37/d/i/705d5f90e5fb5ee3725b8922b76073b7/sachineniya-v-17-toma---tom-2--divi-razkazi-31.jpg",
+                            IsTaken = false,
+                            Title = "Диви Разкази"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Author = "Слави Трифонов",
+                            CostPerDay = 8.0,
+                            ISBN = "9789542819387",
+                            Image = "https://cdn.ozone.bg/media/catalog/product/cache/1/image/400x498/a4e40ebdc3e371adff845072e1c73f37/z/a/097e7a91150b40cf3a93c94e12dc282a/za-men-e-chest-31.jpg",
+                            IsTaken = false,
+                            Title = "За мен е чест"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Author = "Марк Аврелий",
+                            CostPerDay = 5.0,
+                            ISBN = "9789542838654",
+                            Image = "https://cdn.ozone.bg/media/catalog/product/cache/1/image/400x498/a4e40ebdc3e371adff845072e1c73f37/m/a/770200d2b28cce79f22d92eb4b8c13ba/mark-avreliy--kam-sebe-si-luksozno-izdanie-30.jpg",
+                            IsTaken = false,
+                            Title = "Към себе си"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Author = "Фьодор М. Достоевски",
+                            CostPerDay = 9.0,
+                            ISBN = "9789540907680",
+                            Image = "https://cdn.ozone.bg/media/catalog/product/cache/1/image/400x498/a4e40ebdc3e371adff845072e1c73f37/p/r/fe0c5f747aa7d7feab7a3dd45388a570/prestaplenie-i-nakazanie-30.jpg",
+                            IsTaken = false,
+                            Title = "Престъпление и наказание"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Author = "Джордж Оруел",
+                            CostPerDay = 6.0,
+                            ISBN = "9789542833734",
+                            Image = "https://cdn.ozone.bg/media/catalog/product/cache/1/image/400x498/a4e40ebdc3e371adff845072e1c73f37/1/9/4a0dca141d62410d50fb2615ff15ad73/1984-siela-30.jpg",
+                            IsTaken = false,
+                            Title = "1984"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Author = "Джордж Оруел",
+                            CostPerDay = 5.0,
+                            ISBN = "9789542833703",
+                            Image = "https://cdn.ozone.bg/media/catalog/product/cache/1/image/400x498/a4e40ebdc3e371adff845072e1c73f37/f/e/ee665f8b54103f6b17870252d8ac34ff/fermata-na-zhivotnite-siela-30.jpg",
+                            IsTaken = false,
+                            Title = "Фермата на животните"
+                        });
                 });
 
             modelBuilder.Entity("PrivateLibrary.Data.Models.TakenBook", b =>
@@ -331,15 +433,15 @@ namespace PrivateLibrary.Data.Migrations
                         {
                             Id = "dea12856-c198-4129-b3f3-b893d8395082",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "224cb920-05c1-4511-b049-9700d646c3f8",
+                            ConcurrencyStamp = "ce1dc5d9-0606-49bf-886c-44ebc4157934",
                             Email = "admin@gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEMMlJdYDdreDl53weBjNMw72GagCnLLVdi93NymwjecCiXJ1RyUaX5IxUGim5SvUPQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAENOvKAxLNtrL4z1NBoc4kmkoUGoYp69zI++8aOIOt8Hpi1ZvkYvNdriSI/0XU33oYw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "9f85422b-c4e8-4bda-baf1-8ccaeb68f238",
+                            SecurityStamp = "0d1fd909-ce51-4bb7-8b03-71a7652fa154",
                             TwoFactorEnabled = false,
                             UserName = "Admin",
                             FirstName = "Ivan",

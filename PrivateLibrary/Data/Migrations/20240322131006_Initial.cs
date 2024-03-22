@@ -96,7 +96,8 @@ namespace PrivateLibrary.Data.Migrations
                     DateOfTaking = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateOfReturn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Price = table.Column<double>(type: "float", nullable: false),
-                    ReaderId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    ReaderId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    BookId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -107,12 +108,35 @@ namespace PrivateLibrary.Data.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TakenBooks_Books_BookId",
+                        column: x => x.BookId,
+                        principalTable: "Books",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "dea12856-c198-4129-b3f3-b893d8395082", 0, "5eddffc6-fdf4-4511-94e4-ede5426efe99", "ApplicationUser", "admin@gmail.com", false, "Ivan", "Ivanov", false, null, "ADMIN@GMAIL.COM", "ADMIN", "AQAAAAEAACcQAAAAEKlWOsyyG0bCGZ+oAbRL2Hi0j1yQKsb67kLIqLu9uIMMV0f3SWjtoAuIleaVoB+UDQ==", null, false, "29926465-ba53-47c2-9ce5-4b6b8bd5bd6d", false, "Admin" });
+                values: new object[] { "dea12856-c198-4129-b3f3-b893d8395082", 0, "ce1dc5d9-0606-49bf-886c-44ebc4157934", "ApplicationUser", "admin@gmail.com", false, "Ivan", "Ivanov", false, null, "ADMIN@GMAIL.COM", "ADMIN", "AQAAAAEAACcQAAAAENOvKAxLNtrL4z1NBoc4kmkoUGoYp69zI++8aOIOt8Hpi1ZvkYvNdriSI/0XU33oYw==", null, false, "0d1fd909-ce51-4bb7-8b03-71a7652fa154", false, "Admin" });
+
+            migrationBuilder.InsertData(
+                table: "Books",
+                columns: new[] { "Id", "Author", "CostPerDay", "ISBN", "Image", "IsTaken", "Title" },
+                values: new object[,]
+                {
+                    { 1, "Иван Вазов", 4.0, "9786192510244", "https://cdn.ozone.bg/media/catalog/product/cache/1/image/400x498/a4e40ebdc3e371adff845072e1c73f37/p/o/19071533ecfae7e0bc6c0df761f2b77a/pod-igoto-helikon-chervena-koritsa-30.jpg", false, "Под игото" },
+                    { 2, "Кристина Кръстева", 5.0, "9789543985289", "https://i2.helikon.bg/products/8656/20/208656/208656_b.jpg?t=1711110871", false, "Бойко, който винаги се завръща" },
+                    { 3, "Слави Панайотов", 7.0, " 9786197511017", "https://cdn.ozone.bg/media/catalog/product/cache/1/image/400x498/a4e40ebdc3e371adff845072e1c73f37/t/o/e563b1cc68b7a08799821bf41c795b65/top-misteriite-na-balgariya-30.jpg", false, "Топ мистериите на България" },
+                    { 4, "Сергей Станишев", 2.0, "9789549232813", "https://knizhen-pazar.net/books/115/11511/1151187.jpg?size=23008", false, "Защото сме социалисти" },
+                    { 5, "Николай Хайтов", 5.0, " 9789540904382", "https://cdn.ozone.bg/media/catalog/product/cache/1/image/400x498/a4e40ebdc3e371adff845072e1c73f37/d/i/705d5f90e5fb5ee3725b8922b76073b7/sachineniya-v-17-toma---tom-2--divi-razkazi-31.jpg", false, "Диви Разкази" },
+                    { 6, "Слави Трифонов", 8.0, "9789542819387", "https://cdn.ozone.bg/media/catalog/product/cache/1/image/400x498/a4e40ebdc3e371adff845072e1c73f37/z/a/097e7a91150b40cf3a93c94e12dc282a/za-men-e-chest-31.jpg", false, "За мен е чест" },
+                    { 7, "Марк Аврелий", 5.0, "9789542838654", "https://cdn.ozone.bg/media/catalog/product/cache/1/image/400x498/a4e40ebdc3e371adff845072e1c73f37/m/a/770200d2b28cce79f22d92eb4b8c13ba/mark-avreliy--kam-sebe-si-luksozno-izdanie-30.jpg", false, "Към себе си" },
+                    { 8, "Фьодор М. Достоевски", 9.0, "9789540907680", "https://cdn.ozone.bg/media/catalog/product/cache/1/image/400x498/a4e40ebdc3e371adff845072e1c73f37/p/r/fe0c5f747aa7d7feab7a3dd45388a570/prestaplenie-i-nakazanie-30.jpg", false, "Престъпление и наказание" },
+                    { 9, "Джордж Оруел", 6.0, "9789542833734", "https://cdn.ozone.bg/media/catalog/product/cache/1/image/400x498/a4e40ebdc3e371adff845072e1c73f37/1/9/4a0dca141d62410d50fb2615ff15ad73/1984-siela-30.jpg", false, "1984" },
+                    { 10, "Джордж Оруел", 5.0, "9789542833703", "https://cdn.ozone.bg/media/catalog/product/cache/1/image/400x498/a4e40ebdc3e371adff845072e1c73f37/f/e/ee665f8b54103f6b17870252d8ac34ff/fermata-na-zhivotnite-siela-30.jpg", false, "Фермата на животните" }
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUsers_UserId",
@@ -120,6 +144,11 @@ namespace PrivateLibrary.Data.Migrations
                 column: "UserId",
                 unique: true,
                 filter: "[UserId] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TakenBooks_BookId",
+                table: "TakenBooks",
+                column: "BookId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TakenBooks_ReaderId",
@@ -141,10 +170,10 @@ namespace PrivateLibrary.Data.Migrations
                 table: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Books");
+                name: "TakenBooks");
 
             migrationBuilder.DropTable(
-                name: "TakenBooks");
+                name: "Books");
 
             migrationBuilder.DropIndex(
                 name: "IX_AspNetUsers_UserId",

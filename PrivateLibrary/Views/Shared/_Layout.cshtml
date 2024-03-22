@@ -25,22 +25,22 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
-                        @if (User?.IsInRole("Employee") ?? false)
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="TakenBook" asp-action="Index">Taken Books</a>
-                            </li>
-                        }
                         @if (User?.Identity?.IsAuthenticated ?? false)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Book" asp-action="Index">Books</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Book" asp-action="Index">Книги</a>
                             </li>
                         }
                         @if (User?.IsInRole("Admin") ?? false)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="RegisterEmployee">Register Employee</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="RegisterEmployee">Регистриране на служител</a>
+                            </li>
+                        }
+                        @if (User != null && User.IsInRole("Admin") || User != null && User.IsInRole("Employee"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="TakenBook" asp-action="Index">Всички вземания</a>
                             </li>
                         }
                     </ul>

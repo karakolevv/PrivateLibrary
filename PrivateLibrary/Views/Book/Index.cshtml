@@ -6,15 +6,17 @@
 
 <form asp-controller="Book" asp-action="Index" method="get">
     <p>
-        Заглавие:
-        <input type="search" id="searchBox" name="search" value="@ViewBag.Search" />
+        <input type="search" id="searchBox" name="search" value="@ViewBag.Search" placeholder="Заглавие, автор, ISBN" />
         <input type="submit" value="Търси" />
     </p>
 </form>
 
-<div>
-    <a asp-controller="Book" asp-action="Add" class="btn btn-success "> <i class="bi bi-person-dash-fill"></i>Add</a>
-</div>
+@if (User.IsInRole("Admin"))
+{
+    <div>
+        <a asp-controller="Book" asp-action="Add" class="btn btn-success "> <i class="bi bi-person-dash-fill"></i>Add</a>
+    </div>
+}
 
 @foreach (var book in Model)
 {
@@ -26,7 +28,7 @@
                         <b>
                             <text>@book.Title</text>
                         </b>
-                    </h4>                  
+                    </h4>
                 </div>
             </div>
 
@@ -66,13 +68,17 @@
                 dataType: "json",
                 success: function (data) {
                     response($.map(data, function (item) {
-                        return item;
-                    }))
+                        return {
+                            label: item.title + ", " + item.author, // Display both title and author
+                            value: item.title // Set the value to the book title (optional)
+                        };
+                    }));
                 },
                 error: function (response) {
                     console.log(response.responseText);
                 }
-            })
-        }
+            });
+        },
+        minLength: 1 // Minimum number of characters before autocomplete starts
     });
 </script>

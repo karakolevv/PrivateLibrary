@@ -34,7 +34,7 @@ namespace PrivateLibrary.Extensions
                     await roleManager.CreateAsync(clientRole);
                 }
 
-                ApplicationUser? admin = await userManager.FindByNameAsync("admin");
+                ApplicationUser? admin = await userManager.FindByNameAsync("Admin");
                 await userManager.AddToRoleAsync(admin, "Admin");
             })
             .GetAwaiter()

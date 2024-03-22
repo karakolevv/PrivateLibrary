@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using PrivateLibrary.Data;
 using PrivateLibrary.Data.Models;
 using PrivateLibrary.Models;
 
@@ -11,11 +13,13 @@ namespace PrivateLibrary.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly ApplicationDbContext _context;
 
-        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, ApplicationDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _context = context;
         }
 
         [HttpGet]
@@ -156,6 +160,18 @@ namespace PrivateLibrary.Controllers
             await _signInManager.SignOutAsync();
             TempData["success"] = "You have been successfully loged out!";
             return RedirectToAction(nameof(HomeController.Index), "Home");
+        }
+
+        [Authorize(Roles = "Reader")]
+        public async Task<IActionResult> TakenBooks()
+        {
+            var user = await _userManager.GetUserAsync(User);
+
+            var takenBooks = await _context.TakenBooks
+                .Where(tb => tb.ReaderId == user.Id)
+                .ToListAsync();
+
+            return View(takenBooks);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PrivateLibrary.Data;
@@ -21,12 +22,14 @@ namespace PrivateLibrary.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(string search)
         {
-            var books = _context.Books.AsQueryable();
+            var books = _context.Books
+                .Where(b => b.IsTaken == false)
+                .AsQueryable();
 
             if (!string.IsNullOrEmpty(search))
             {
                 ViewBag.Search = search;
-                books = books.Where(book => book.Title.Contains(search));
+                books = books.Where(book => book.Title.Contains(search) || book.Author.Contains(search) || book.ISBN.Equals(search));
             }
 
             return View(await books.ToListAsync() ?? throw new ArgumentNullException(nameof(search)));
@@ -36,8 +39,9 @@ namespace PrivateLibrary.Controllers
         public async Task<IActionResult> AutoComplete(string search)
         {
             var books = await _context.Books
-                .Where(book => book.Title.Contains(search))
-                .Select(book => book.Title).ToListAsync()
+                .Where(book => book.Title.Contains(search) || book.Author.Contains(search))
+                .Select(book => new { book.Title, book.Author })
+                .ToListAsync()
                 ?? throw new ArgumentNullException(nameof(search));
 
             return Json(books);
@@ -52,12 +56,14 @@ namespace PrivateLibrary.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public IActionResult Add()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Add(Book book)
         {
             if (!ModelState.IsValid)
@@ -106,6 +112,12 @@ namespace PrivateLibrary.Controllers
             var book = await _context.Books.FirstOrDefaultAsync(b => b.Id == id) 
                 ?? throw new ArgumentNullException(nameof(id));
 
+            if (_context.Books.Where(b => b.IsTaken == false).Count() < 3)
+            {
+                ModelState.AddModelError("", "Книгата не може да бъде взета.");
+                return View("Details", book);
+            }
+
             book.IsTaken = true;
 
             int numberOfDays = 14;
@@ -114,6 +126,7 @@ namespace PrivateLibrary.Controllers
 
             var takenBook = new TakenBook()
             {
+                BookId = book.Id,
                 Title = book.Title,
                 Author = book.Author,
                 DateOfTaking = DateTime.Now,
@@ -125,8 +138,7 @@ namespace PrivateLibrary.Controllers
             _context.Add(takenBook);
             await _context.SaveChangesAsync();
 
-            //TODO: da ne te prashta kum tuka
-            return RedirectToAction(nameof(Index), "TakenBook");
+            return RedirectToAction(nameof(Details), "TakenBook", new {id = takenBook.Id});
         }
     }
 }
