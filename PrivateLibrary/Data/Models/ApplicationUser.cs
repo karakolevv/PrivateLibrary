@@ -13,6 +13,6 @@ namespace PrivateLibrary.Data.Models
         [MaxLength(50)]
         public string LastName { get; set; } = default!;
 
-        public Employee Employee { get; set; } = default!;
+        public Employee? Employee { get; set; }
     }
 }

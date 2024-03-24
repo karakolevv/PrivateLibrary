@@ -433,15 +433,15 @@ namespace PrivateLibrary.Data.Migrations
                         {
                             Id = "dea12856-c198-4129-b3f3-b893d8395082",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ce1dc5d9-0606-49bf-886c-44ebc4157934",
+                            ConcurrencyStamp = "ef92811d-4ae4-4d25-8271-70463b77908d",
                             Email = "admin@gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAENOvKAxLNtrL4z1NBoc4kmkoUGoYp69zI++8aOIOt8Hpi1ZvkYvNdriSI/0XU33oYw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEEjzCoAMegiE2A+8y7Sl3Iu5k93gsXCdBKMWPcGpM7qaYsQ45fkAPuTByYwtgX935g==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "0d1fd909-ce51-4bb7-8b03-71a7652fa154",
+                            SecurityStamp = "3e8d8e63-af0b-4809-a99d-40e84f1a891a",
                             TwoFactorEnabled = false,
                             UserName = "Admin",
                             FirstName = "Ivan",
@@ -472,6 +472,7 @@ namespace PrivateLibrary.Data.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("UserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasIndex("UserId")
@@ -555,15 +556,16 @@ namespace PrivateLibrary.Data.Migrations
                 {
                     b.HasOne("PrivateLibrary.Data.Models.ApplicationUser", "User")
                         .WithOne("Employee")
-                        .HasForeignKey("PrivateLibrary.Data.Models.Employee", "UserId");
+                        .HasForeignKey("PrivateLibrary.Data.Models.Employee", "UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("User");
                 });
 
             modelBuilder.Entity("PrivateLibrary.Data.Models.ApplicationUser", b =>
                 {
-                    b.Navigation("Employee")
-                        .IsRequired();
+                    b.Navigation("Employee");
                 });
 #pragma warning restore 612, 618
         }

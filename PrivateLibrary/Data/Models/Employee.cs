@@ -21,8 +21,8 @@ namespace PrivateLibrary.Data.Models
         public DateTime? LeaveDate { get; set; }
 
         [ForeignKey(nameof(User))]
-        public string? UserId { get; set; } = default!;
+        public string UserId { get; set; } = default!;
 
-        public ApplicationUser? User { get; set; } = default!;
+        public ApplicationUser User { get; set; } = default!;
     }
 }

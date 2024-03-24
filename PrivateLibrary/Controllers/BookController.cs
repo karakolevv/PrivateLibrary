@@ -4,7 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PrivateLibrary.Data;
 using PrivateLibrary.Data.Models;
+using PrivateLibrary.Models.Pagination;
 using System.ComponentModel.Design;
+using System.Drawing.Printing;
 
 namespace PrivateLibrary.Controllers
 {
@@ -20,7 +22,7 @@ namespace PrivateLibrary.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index(string search)
+        public async Task<IActionResult> Index(string? search, string? sortOrder, int pageNumber = 1, int pageSize = 5)
         {
             var books = _context.Books
                 .Where(b => b.IsTaken == false)
@@ -32,7 +34,35 @@ namespace PrivateLibrary.Controllers
                 books = books.Where(book => book.Title.Contains(search) || book.Author.Contains(search) || book.ISBN.Equals(search));
             }
 
-            return View(await books.ToListAsync() ?? throw new ArgumentNullException(nameof(search)));
+            if (!string.IsNullOrEmpty(sortOrder))
+            {
+                switch (sortOrder)
+                {
+                    case "Заглавие (А-Я)":
+                        books = books.OrderBy(b => b.Title);
+                        break;
+                    case "Заглавие (Я-А)":
+                        books = books.OrderByDescending(b => b.Title);
+                        break;
+                    case "Автор (А-Я)":
+                        books = books.OrderBy(b => b.Author);
+                        break;
+                    case "Автор (Я-А)":
+                        books = books.OrderByDescending(b => b.Author);
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            var filtered = await books
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            var paginatedBooks = new PaginatedList<Book>(filtered, filtered.Count, pageNumber, pageSize);
+
+            return View(paginatedBooks);
         }
 
         [HttpGet]
@@ -109,7 +139,7 @@ namespace PrivateLibrary.Controllers
 
         public async Task<IActionResult> Take(int id)
         {
-            var book = await _context.Books.FirstOrDefaultAsync(b => b.Id == id) 
+            var book = await _context.Books.FirstOrDefaultAsync(b => b.Id == id)
                 ?? throw new ArgumentNullException(nameof(id));
 
             if (_context.Books.Where(b => b.IsTaken == false).Count() < 3)
@@ -138,7 +168,7 @@ namespace PrivateLibrary.Controllers
             _context.Add(takenBook);
             await _context.SaveChangesAsync();
 
-            return RedirectToAction(nameof(Details), "TakenBook", new {id = takenBook.Id});
+            return RedirectToAction(nameof(Details), "TakenBook", new { id = takenBook.Id });
         }
     }
 }

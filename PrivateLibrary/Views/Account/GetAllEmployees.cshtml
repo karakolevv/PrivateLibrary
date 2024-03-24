@@ -1,0 +1,32 @@
+﻿@using PrivateLibrary.Data.Models;
+@model ICollection<Employee>
+
+@foreach (var employee in Model)
+{
+    <div class="card" style=" padding: 25px 25px 25px 25px;">
+        <div class="container" style">
+            <p>
+                Име: @employee.User.FirstName
+            </p>
+
+            <p>
+                Фамилия: @employee.User.LastName
+
+            </p>
+
+            <p>
+                Email: @employee.User.Email
+            </p>
+
+            <p>
+                Дата на назначаване: @employee.HireDate
+
+            </p>
+
+            <p>
+                ЕГН: @employee.EGN
+
+            </p>
+        </div>
+    </div>
+}

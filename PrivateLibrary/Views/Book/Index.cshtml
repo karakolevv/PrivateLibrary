@@ -1,5 +1,6 @@
 ﻿@using PrivateLibrary.Data.Models;
-@model ICollection<Book>
+@using PrivateLibrary.Models.Pagination
+@model PaginatedList<Book>
 
 <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="/resources/demos/style.css">
@@ -10,6 +11,12 @@
         <input type="submit" value="Търси" />
     </p>
 </form>
+
+<p>Сортирай по:</p>
+<a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex)" asp-route-sortOrder="Заглавие (А-Я)">Заглавие (А-Я)</a>
+<a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex)" asp-route-sortOrder="Заглавие (Я-А)">Заглавие (Я-А)</a>
+<a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex)" asp-route-sortOrder="Автор (А-Я)">Автор (А-Я)</a>
+<a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex)" asp-route-sortOrder="Автор (Я-А)">Автор (Я-А)</a>
 
 @if (User.IsInRole("Admin"))
 {
@@ -56,6 +63,15 @@
     </div>
 }
 
+@{
+    var prevDisabled = Model.HasPreviousPage ? "" : "disable";
+    var nextDisabled = Model.HasNextPage ? "" : "disable";
+}
+<div>
+    <a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex - 1)" class="@prevDisabled">Предишна</a>
+    <a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex + 1)" class="@nextDisabled">Следваща</a>
+</div>
+
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 <script>
@@ -69,8 +85,8 @@
                 success: function (data) {
                     response($.map(data, function (item) {
                         return {
-                            label: item.title + ", " + item.author, // Display both title and author
-                            value: item.title // Set the value to the book title (optional)
+                            label: item.title + ", " + item.author,
+                            value: item.title 
                         };
                     }));
                 },
@@ -79,6 +95,6 @@
                 }
             });
         },
-        minLength: 1 // Minimum number of characters before autocomplete starts
+        minLength: 1 
     });
 </script>

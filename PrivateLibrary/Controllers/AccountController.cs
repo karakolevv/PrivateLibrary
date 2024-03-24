@@ -15,7 +15,7 @@ namespace PrivateLibrary.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ApplicationDbContext _context;
 
-        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, ApplicationDbContext context)
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, ApplicationDbContext context, RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -87,10 +87,12 @@ namespace PrivateLibrary.Controllers
                 LastName = model.LastName,
                 UserName = model.UserName,
                 PhoneNumber = model.PhoneNumber,
-                Employee = new Employee()
+                Employee = new Employee
                 {
                     MiddleName = model.MiddleName,
-                    EGN = model.EGN
+                    EGN = model.EGN,
+                    HireDate = DateTime.Now,
+                    IsAccountActive = true
                 }
             };
 
@@ -162,16 +164,32 @@ namespace PrivateLibrary.Controllers
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }
 
-        [Authorize(Roles = "Reader")]
-        public async Task<IActionResult> TakenBooks()
+        [Authorize(Roles = "Admin, Reader")]
+        public async Task<IActionResult> TakenBooks(string readerId)
         {
-            var user = await _userManager.GetUserAsync(User);
-
             var takenBooks = await _context.TakenBooks
-                .Where(tb => tb.ReaderId == user.Id)
+                .Where(tb => tb.ReaderId == readerId)
                 .ToListAsync();
 
             return View(takenBooks);
+        }
+
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> GetAllEmployees()
+        {
+            var employees = await _context.Employees
+                .Include(u => u.User)
+                .ToListAsync();
+
+            return View(employees);
+        }
+
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> GetAllReaders()
+        {
+            var readers = await _userManager.GetUsersInRoleAsync("Reader");
+
+            return View(readers);
         }
     }
 }

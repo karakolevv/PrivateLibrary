@@ -119,7 +119,7 @@ namespace PrivateLibrary.Data.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "dea12856-c198-4129-b3f3-b893d8395082", 0, "ce1dc5d9-0606-49bf-886c-44ebc4157934", "ApplicationUser", "admin@gmail.com", false, "Ivan", "Ivanov", false, null, "ADMIN@GMAIL.COM", "ADMIN", "AQAAAAEAACcQAAAAENOvKAxLNtrL4z1NBoc4kmkoUGoYp69zI++8aOIOt8Hpi1ZvkYvNdriSI/0XU33oYw==", null, false, "0d1fd909-ce51-4bb7-8b03-71a7652fa154", false, "Admin" });
+                values: new object[] { "dea12856-c198-4129-b3f3-b893d8395082", 0, "ef92811d-4ae4-4d25-8271-70463b77908d", "ApplicationUser", "admin@gmail.com", false, "Ivan", "Ivanov", false, null, "ADMIN@GMAIL.COM", "ADMIN", "AQAAAAEAACcQAAAAEEjzCoAMegiE2A+8y7Sl3Iu5k93gsXCdBKMWPcGpM7qaYsQ45fkAPuTByYwtgX935g==", null, false, "3e8d8e63-af0b-4809-a99d-40e84f1a891a", false, "Admin" });
 
             migrationBuilder.InsertData(
                 table: "Books",
@@ -160,7 +160,8 @@ namespace PrivateLibrary.Data.Migrations
                 table: "AspNetUsers",
                 column: "UserId",
                 principalTable: "AspNetUsers",
-                principalColumn: "Id");
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Restrict);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

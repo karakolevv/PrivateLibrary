@@ -24,8 +24,24 @@ namespace PrivateLibrary.Controllers
         {
             var takenBook = await _context.TakenBooks
                 .Include(tb => tb.Reader)
+                .Include(tb => tb.Book)
                 .FirstOrDefaultAsync(x => x.Id == id);
             return View(takenBook);
+        }
+
+        public async Task<IActionResult> Return(int id)
+        {
+            var takenBook = await _context.TakenBooks.FirstOrDefaultAsync(x => x.Id == id)
+                ?? throw new ArgumentNullException(nameof(id));
+            var book = await _context.Books.FirstOrDefaultAsync(x => x.Id == takenBook.BookId)
+                ?? throw new ArgumentNullException(nameof(id));
+
+            book.IsTaken = false;
+            takenBook.DateOfReturn = DateTime.Now;
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index), "Book");
         }
     }
 }

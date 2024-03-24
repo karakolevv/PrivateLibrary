@@ -15,7 +15,7 @@
             </p>
 
             <p>
-                Взета от: @Model.Reader.FirstName @Model.Reader.LastName
+                Взета от: <a asp-controller="Account" asp-action="TakenBooks" asp-route-readerId="@Model.ReaderId">@Model.Reader?.FirstName @Model.Reader?.LastName</a>
             </p>
 
             <p>
@@ -30,5 +30,9 @@
                 Price: @Model.Price
             </p>
         </div>
+        @if (Model.Book.IsTaken)
+        {
+           <a asp-controller="TakenBook" asp-action="Return" asp-route-id="@Model.Id" class="btn btn-danger "> <i class="bi bi-person-dash-fill"></i>Върни</a> 
+        }
     </div>
 </div>
