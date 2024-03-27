@@ -1,0 +1,23 @@
+﻿@using PrivateLibrary.Data.Models;
+@model ICollection<Reader>
+
+@foreach (var reader in Model)
+{
+    <div class="card" style=" padding: 25px 25px 25px 25px;">
+        <div class="container" style">
+            <p>
+                Име: @reader.User.FirstName
+            </p>
+
+            <p>
+                Фамилия: @reader.User.LastName
+
+            </p>
+
+            <p>
+                Email: @reader.User.Email
+            </p>
+        </div>
+        <a asp-action="Details" asp-controller="Reader" asp-route-userId="@reader.Id">Детайли</a>
+    </div>
+}

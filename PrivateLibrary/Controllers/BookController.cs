@@ -153,6 +153,7 @@ namespace PrivateLibrary.Controllers
             int numberOfDays = 14;
             var currentUser = await _userManager.GetUserAsync(User)
                 ?? throw new ArgumentNullException(nameof(id));
+            var reader = await _context.Readers.FirstOrDefaultAsync(r => r.UserId == currentUser.Id);
 
             var takenBook = new TakenBook()
             {
@@ -162,7 +163,7 @@ namespace PrivateLibrary.Controllers
                 DateOfTaking = DateTime.Now,
                 DateOfReturn = DateTime.Now.AddDays(numberOfDays),
                 Price = book.CostPerDay * numberOfDays,
-                ReaderId = currentUser.Id
+                ReaderId = reader.Id
             };
 
             _context.Add(takenBook);

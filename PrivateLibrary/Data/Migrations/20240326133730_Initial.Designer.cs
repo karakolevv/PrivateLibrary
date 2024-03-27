@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PrivateLibrary.Data;
 
@@ -11,9 +12,10 @@ using PrivateLibrary.Data;
 namespace PrivateLibrary.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240326133730_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -372,7 +374,6 @@ namespace PrivateLibrary.Data.Migrations
             modelBuilder.Entity("PrivateLibrary.Data.Models.Employee", b =>
                 {
                     b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("EGN")
@@ -407,7 +408,6 @@ namespace PrivateLibrary.Data.Migrations
             modelBuilder.Entity("PrivateLibrary.Data.Models.Reader", b =>
                 {
                     b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("UserId")
@@ -485,15 +485,15 @@ namespace PrivateLibrary.Data.Migrations
                         {
                             Id = "dea12856-c198-4129-b3f3-b893d8395082",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "516d66aa-715d-484d-baba-ffebc3719169",
+                            ConcurrencyStamp = "9177d797-43b1-4157-8d8c-57ba64b0aa43",
                             Email = "admin@gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAENwkYmpsrCQdEeHr8u/8yHS7GS1wj4pdD709GKe/j4FUTQNFEqrLVMCGp4Zai9o0MQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEPxYpTrmwfTqCViZKWSzNJY4bfDzqdI3Sd91CV47CPFrAsUy6ZYAa3YK2D7rctaV3g==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "999e6dd3-7a29-49f5-9aca-5c7dc0a7dc56",
+                            SecurityStamp = "fdb8b083-9529-4cf9-aa18-e75bf6925a0f",
                             TwoFactorEnabled = false,
                             UserName = "Admin",
                             FirstName = "Ivan",

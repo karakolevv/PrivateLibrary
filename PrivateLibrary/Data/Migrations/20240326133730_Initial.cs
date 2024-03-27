@@ -17,28 +17,10 @@ namespace PrivateLibrary.Data.Migrations
                 defaultValue: "");
 
             migrationBuilder.AddColumn<string>(
-                name: "EGN",
-                table: "AspNetUsers",
-                type: "nvarchar(max)",
-                nullable: true);
-
-            migrationBuilder.AddColumn<string>(
                 name: "FirstName",
                 table: "AspNetUsers",
                 type: "nvarchar(50)",
                 maxLength: 50,
-                nullable: true);
-
-            migrationBuilder.AddColumn<DateTime>(
-                name: "HireDate",
-                table: "AspNetUsers",
-                type: "datetime2",
-                nullable: true);
-
-            migrationBuilder.AddColumn<bool>(
-                name: "IsAccountActive",
-                table: "AspNetUsers",
-                type: "bit",
                 nullable: true);
 
             migrationBuilder.AddColumn<string>(
@@ -46,25 +28,6 @@ namespace PrivateLibrary.Data.Migrations
                 table: "AspNetUsers",
                 type: "nvarchar(50)",
                 maxLength: 50,
-                nullable: true);
-
-            migrationBuilder.AddColumn<DateTime>(
-                name: "LeaveDate",
-                table: "AspNetUsers",
-                type: "datetime2",
-                nullable: true);
-
-            migrationBuilder.AddColumn<string>(
-                name: "MiddleName",
-                table: "AspNetUsers",
-                type: "nvarchar(50)",
-                maxLength: 50,
-                nullable: true);
-
-            migrationBuilder.AddColumn<string>(
-                name: "UserId",
-                table: "AspNetUsers",
-                type: "nvarchar(450)",
                 nullable: true);
 
             migrationBuilder.CreateTable(
@@ -86,6 +49,47 @@ namespace PrivateLibrary.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Employees",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    MiddleName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    EGN = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    HireDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsAccountActive = table.Column<bool>(type: "bit", nullable: false),
+                    LeaveDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Employees", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Employees_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Readers",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Readers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Readers_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "TakenBooks",
                 columns: table => new
                 {
@@ -103,15 +107,15 @@ namespace PrivateLibrary.Data.Migrations
                 {
                     table.PrimaryKey("PK_TakenBooks", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_TakenBooks_AspNetUsers_ReaderId",
-                        column: x => x.ReaderId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
                         name: "FK_TakenBooks_Books_BookId",
                         column: x => x.BookId,
                         principalTable: "Books",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TakenBooks_Readers_ReaderId",
+                        column: x => x.ReaderId,
+                        principalTable: "Readers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -119,7 +123,7 @@ namespace PrivateLibrary.Data.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "dea12856-c198-4129-b3f3-b893d8395082", 0, "ef92811d-4ae4-4d25-8271-70463b77908d", "ApplicationUser", "admin@gmail.com", false, "Ivan", "Ivanov", false, null, "ADMIN@GMAIL.COM", "ADMIN", "AQAAAAEAACcQAAAAEEjzCoAMegiE2A+8y7Sl3Iu5k93gsXCdBKMWPcGpM7qaYsQ45fkAPuTByYwtgX935g==", null, false, "3e8d8e63-af0b-4809-a99d-40e84f1a891a", false, "Admin" });
+                values: new object[] { "dea12856-c198-4129-b3f3-b893d8395082", 0, "9177d797-43b1-4157-8d8c-57ba64b0aa43", "ApplicationUser", "admin@gmail.com", false, "Ivan", "Ivanov", false, null, "ADMIN@GMAIL.COM", "ADMIN", "AQAAAAEAACcQAAAAEPxYpTrmwfTqCViZKWSzNJY4bfDzqdI3Sd91CV47CPFrAsUy6ZYAa3YK2D7rctaV3g==", null, false, "fdb8b083-9529-4cf9-aa18-e75bf6925a0f", false, "Admin" });
 
             migrationBuilder.InsertData(
                 table: "Books",
@@ -139,11 +143,14 @@ namespace PrivateLibrary.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUsers_UserId",
-                table: "AspNetUsers",
-                column: "UserId",
-                unique: true,
-                filter: "[UserId] IS NOT NULL");
+                name: "IX_Employees_UserId",
+                table: "Employees",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Readers_UserId",
+                table: "Readers",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TakenBooks_BookId",
@@ -154,21 +161,12 @@ namespace PrivateLibrary.Data.Migrations
                 name: "IX_TakenBooks_ReaderId",
                 table: "TakenBooks",
                 column: "ReaderId");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_AspNetUsers_AspNetUsers_UserId",
-                table: "AspNetUsers",
-                column: "UserId",
-                principalTable: "AspNetUsers",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Restrict);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_AspNetUsers_AspNetUsers_UserId",
-                table: "AspNetUsers");
+            migrationBuilder.DropTable(
+                name: "Employees");
 
             migrationBuilder.DropTable(
                 name: "TakenBooks");
@@ -176,9 +174,8 @@ namespace PrivateLibrary.Data.Migrations
             migrationBuilder.DropTable(
                 name: "Books");
 
-            migrationBuilder.DropIndex(
-                name: "IX_AspNetUsers_UserId",
-                table: "AspNetUsers");
+            migrationBuilder.DropTable(
+                name: "Readers");
 
             migrationBuilder.DeleteData(
                 table: "AspNetUsers",
@@ -190,35 +187,11 @@ namespace PrivateLibrary.Data.Migrations
                 table: "AspNetUsers");
 
             migrationBuilder.DropColumn(
-                name: "EGN",
-                table: "AspNetUsers");
-
-            migrationBuilder.DropColumn(
                 name: "FirstName",
                 table: "AspNetUsers");
 
             migrationBuilder.DropColumn(
-                name: "HireDate",
-                table: "AspNetUsers");
-
-            migrationBuilder.DropColumn(
-                name: "IsAccountActive",
-                table: "AspNetUsers");
-
-            migrationBuilder.DropColumn(
                 name: "LastName",
-                table: "AspNetUsers");
-
-            migrationBuilder.DropColumn(
-                name: "LeaveDate",
-                table: "AspNetUsers");
-
-            migrationBuilder.DropColumn(
-                name: "MiddleName",
-                table: "AspNetUsers");
-
-            migrationBuilder.DropColumn(
-                name: "UserId",
                 table: "AspNetUsers");
         }
     }

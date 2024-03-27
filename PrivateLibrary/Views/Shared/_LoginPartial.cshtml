@@ -1,7 +1,9 @@
 ﻿@using Microsoft.AspNetCore.Identity
+@using PrivateLibrary.Data
 @using PrivateLibrary.Data.Models
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
+@inject ApplicationDbContext Context
 
 <ul class="navbar-nav">
     @if (SignInManager.IsSignedIn(User))
@@ -11,9 +13,11 @@
         </li>
         @if (User?.IsInRole("Reader") ?? false)
         {
-           <li class="nav-item">
-            <a class="nav-link text-dark" asp-action="TakenBooks" asp-controller="Account" asp-route-readerId="@UserManager.GetUserId(User)">Взети книги</a>
-           </li> 
+            var currentUserId = UserManager.GetUserId(User);
+            var reader = Context.Readers.FirstOrDefault(r => r.UserId == currentUserId);
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-action="TakenBooks" asp-controller="Reader" asp-route-readerId="@reader.Id">Взети книги</a>
+            </li>
         }
         <li class="nav-item">
             <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
@@ -24,7 +28,7 @@
     else
     {
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-action="RegisterReader" asp-controller="Account">Регистрация</a>
+            <a class="nav-link text-dark" asp-action="Register" asp-controller="Reader">Регистрация</a>
         </li>
         <li class="nav-item">
             <a class="nav-link text-dark" asp-action="Login" asp-controller="Account">Вход</a>

@@ -34,19 +34,19 @@
                         @if (User?.IsInRole("Admin") ?? false)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="RegisterEmployee">Регистриране на служител</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Employee" asp-action="Register">Регистриране на служител</a>
                             </li>
                         }
                         @if (User?.IsInRole("Admin") ?? false)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="GetAllEmployees">Всички служители</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Employee" asp-action="GetAll">Всички служители</a>
                             </li>
                         }
                         @if (User?.IsInRole("Admin") ?? false)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="GetAllReaders">Всички читатели</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Reader" asp-action="GetAll">Всички читатели</a>
                             </li>
                         }
                         @if (User != null && User.IsInRole("Admin") || User != null && User.IsInRole("Employee"))

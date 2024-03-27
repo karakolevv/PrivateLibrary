@@ -28,7 +28,7 @@ namespace PrivateLibrary.Data.Models
         [ForeignKey(nameof(Reader))]
         public string ReaderId { get; set; } = default!;
 
-        public ApplicationUser Reader { get; set; } = default!;
+        public Reader Reader { get; set; } = default!;
 
         [ForeignKey(nameof(Book))]
         public int BookId { get; set; }

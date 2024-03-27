@@ -15,7 +15,7 @@
             </p>
 
             <p>
-                Взета от: <a asp-controller="Account" asp-action="TakenBooks" asp-route-readerId="@Model.ReaderId">@Model.Reader?.FirstName @Model.Reader?.LastName</a>
+                Взета от: <a asp-controller="Reader" asp-action="TakenBooks" asp-route-readerId="@Model.ReaderId">@Model.Reader.User.FirstName @Model.Reader.User.LastName</a>
             </p>
 
             <p>

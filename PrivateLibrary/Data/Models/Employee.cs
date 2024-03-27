@@ -4,8 +4,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PrivateLibrary.Data.Models
 {
-    public class Employee : IdentityUser
+    public class Employee
     {
+        [Key]
+        public string Id { get; set; } = default!;
+
         [Required]
         [MaxLength(50)]
         public string MiddleName { get; set; } = default!;

@@ -19,15 +19,18 @@ namespace PrivateLibrary.Data
 
         public DbSet<Employee> Employees { get; set; }
 
+        public DbSet<Reader> Readers { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
 
-            builder.Entity<ApplicationUser>()
-                .HasOne(e => e.Employee)
-                .WithOne(u => u.User)
-                .HasForeignKey<Employee>(e => e.UserId)
-                .OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<Employee>()
+                .Property(e => e.Id)
+                .ValueGeneratedOnAdd();
+            builder.Entity<Reader>()
+                .Property(e => e.Id)
+                .ValueGeneratedOnAdd(); ;
 
             builder.ApplyConfiguration(new UserConfiguration());
             builder.ApplyConfiguration(new BookConfiguration());

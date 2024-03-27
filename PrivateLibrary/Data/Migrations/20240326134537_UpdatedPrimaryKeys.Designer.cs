@@ -12,8 +12,8 @@ using PrivateLibrary.Data;
 namespace PrivateLibrary.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240324152603_Initial")]
-    partial class Initial
+    [Migration("20240326134537_UpdatedPrimaryKeys")]
+    partial class UpdatedPrimaryKeys
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -371,6 +371,58 @@ namespace PrivateLibrary.Data.Migrations
                         });
                 });
 
+            modelBuilder.Entity("PrivateLibrary.Data.Models.Employee", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("EGN")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("HireDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsAccountActive")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LeaveDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("MiddleName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Employees");
+                });
+
+            modelBuilder.Entity("PrivateLibrary.Data.Models.Reader", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Readers");
+                });
+
             modelBuilder.Entity("PrivateLibrary.Data.Models.TakenBook", b =>
                 {
                     b.Property<int>("Id")
@@ -435,53 +487,20 @@ namespace PrivateLibrary.Data.Migrations
                         {
                             Id = "dea12856-c198-4129-b3f3-b893d8395082",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ef92811d-4ae4-4d25-8271-70463b77908d",
+                            ConcurrencyStamp = "516d66aa-715d-484d-baba-ffebc3719169",
                             Email = "admin@gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEEjzCoAMegiE2A+8y7Sl3Iu5k93gsXCdBKMWPcGpM7qaYsQ45fkAPuTByYwtgX935g==",
+                            PasswordHash = "AQAAAAEAACcQAAAAENwkYmpsrCQdEeHr8u/8yHS7GS1wj4pdD709GKe/j4FUTQNFEqrLVMCGp4Zai9o0MQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "3e8d8e63-af0b-4809-a99d-40e84f1a891a",
+                            SecurityStamp = "999e6dd3-7a29-49f5-9aca-5c7dc0a7dc56",
                             TwoFactorEnabled = false,
                             UserName = "Admin",
                             FirstName = "Ivan",
                             LastName = "Ivanov"
                         });
-                });
-
-            modelBuilder.Entity("PrivateLibrary.Data.Models.Employee", b =>
-                {
-                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
-
-                    b.Property<string>("EGN")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("HireDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsAccountActive")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("LeaveDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("MiddleName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasIndex("UserId")
-                        .IsUnique()
-                        .HasFilter("[UserId] IS NOT NULL");
-
-                    b.HasDiscriminator().HasValue("Employee");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -535,6 +554,28 @@ namespace PrivateLibrary.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("PrivateLibrary.Data.Models.Employee", b =>
+                {
+                    b.HasOne("PrivateLibrary.Data.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("PrivateLibrary.Data.Models.Reader", b =>
+                {
+                    b.HasOne("PrivateLibrary.Data.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("PrivateLibrary.Data.Models.TakenBook", b =>
                 {
                     b.HasOne("PrivateLibrary.Data.Models.Book", "Book")
@@ -543,7 +584,7 @@ namespace PrivateLibrary.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PrivateLibrary.Data.Models.ApplicationUser", "Reader")
+                    b.HasOne("PrivateLibrary.Data.Models.Reader", "Reader")
                         .WithMany()
                         .HasForeignKey("ReaderId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -552,22 +593,6 @@ namespace PrivateLibrary.Data.Migrations
                     b.Navigation("Book");
 
                     b.Navigation("Reader");
-                });
-
-            modelBuilder.Entity("PrivateLibrary.Data.Models.Employee", b =>
-                {
-                    b.HasOne("PrivateLibrary.Data.Models.ApplicationUser", "User")
-                        .WithOne("Employee")
-                        .HasForeignKey("PrivateLibrary.Data.Models.Employee", "UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("PrivateLibrary.Data.Models.ApplicationUser", b =>
-                {
-                    b.Navigation("Employee");
                 });
 #pragma warning restore 612, 618
         }

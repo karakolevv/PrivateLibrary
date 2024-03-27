@@ -1,0 +1,15 @@
+﻿@using PrivateLibrary.Data.Models
+@model Employee
+
+<div>
+    <div class="card" style=" padding: 25px 25px 25px 25px;">
+        <div class="container">
+            <h4>
+                <b>
+                    @Model.User.FirstName
+                </b>
+            </h4>
+        </div>
+        <a asp-action="Delete" asp-controller="Employee" asp-route-userId="@Model.UserId">Изтриване</a>
+    </div>
+</div>

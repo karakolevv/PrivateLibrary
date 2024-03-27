@@ -12,7 +12,5 @@ namespace PrivateLibrary.Data.Models
         [Required]
         [MaxLength(50)]
         public string LastName { get; set; } = default!;
-
-        public Employee? Employee { get; set; }
     }
 }

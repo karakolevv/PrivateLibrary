@@ -24,6 +24,7 @@ namespace PrivateLibrary.Controllers
         {
             var takenBook = await _context.TakenBooks
                 .Include(tb => tb.Reader)
+                .Include(tb => tb.Reader.User)
                 .Include(tb => tb.Book)
                 .FirstOrDefaultAsync(x => x.Id == id);
             return View(takenBook);
