@@ -14,7 +14,7 @@ namespace PrivateLibrary.Data.Models
         public string MiddleName { get; set; } = default!;
 
         [Required]
-        [RegularExpression(@"^\d{10}$", ErrorMessage = "EGN must be exactly 10 digits")]
+        [RegularExpression(@"^\d{10}$", ErrorMessage = "ЕГН-то трябва да бъде 10 цифри!")]
         public string EGN { get; set; } = default!;
 
         public DateTime HireDate { get; set; }

@@ -1,49 +1,55 @@
 ﻿@using PrivateLibrary.Data.Models;
 @model Book
+
 @{
-    ViewData["Title"] = "Edit Book";
+    ViewData["Title"] = "Редактиране на книга";
 }
 
-<form id="EditBookForm" method="post">
-    <div>
-        <div class="text-lg-start" style="padding-bottom: 20px;">
-            <label style="padding-left: 10px;" asp-for="@Model.Title"></label>
-            <input class="form-control" aria-required="true" asp-for="@Model.Title" />
-            <span asp-validation-for="@Model.Title" class="text-danger"></span>
-        </div>
+<h1 class="text-center">@ViewData["Title"]</h1>
 
-        <div class="text-lg-start" style="padding-bottom: 20px;">
-            <label style="padding-left: 10px;" asp-for="@Model.Author"></label>
-            <input class="form-control" aria-required="true" asp-for="@Model.Author" />
-            <span asp-validation-for="@Model.Author" class="text-danger"></span>
-        </div>
+<div class="row">
+    <div class="col-md-4 offset-md-4">
+        <form id="EditBookForm" method="post">
+            <hr />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="text-lg-start" style="padding-bottom: 20px;">
+                <label style="padding-left: 10px;" asp-for="@Model.Title">Заглавие</label>
+                <input class="form-control" aria-required="true" asp-for="@Model.Title" />
+                <span asp-validation-for="@Model.Title" class="text-danger"></span>
+            </div>
 
-        <div class="text-lg-start" style="padding-bottom: 20px;">
-            <label style="padding-left: 10px;" asp-for="@Model.ISBN"></label>
-            <input type="text" class="multiline-input" aria-required="true" asp-for="@Model.ISBN" />
-            <span asp-validation-for="@Model.ISBN" class="text-danger"></span>
-        </div>
+            <div class="text-lg-start" style="padding-bottom: 20px;">
+                <label style="padding-left: 10px;" asp-for="@Model.Author">Автор</label>
+                <input class="form-control" aria-required="true" asp-for="@Model.Author" />
+                <span asp-validation-for="@Model.Author" class="text-danger"></span>
+            </div>
 
-        <div class="text-lg-start" style="padding-bottom: 20px;">
-            <label style="padding-left: 10px;" asp-for="@Model.CostPerDay"></label>
-            <input type="text" class="multiline-input" aria-required="true" asp-for="@Model.CostPerDay" />
-            <span asp-validation-for="@Model.CostPerDay" class="text-danger"></span>
-        </div>
+            <div class="text-lg-start" style="padding-bottom: 20px;">
+                <label style="padding-left: 10px;" asp-for="@Model.CostPerDay">Цена за ден</label>
+                <input type="text" class="multiline-input" aria-required="true" asp-for="@Model.CostPerDay" />
+                <span asp-validation-for="@Model.CostPerDay" class="text-danger"></span>
+            </div>
 
-        <div class="text-lg-start" style="padding-bottom: 20px;">
-            <label style="padding-left: 10px;" asp-for="@Model.Image"></label>
-            <input type="text" class="multiline-input" aria-required="true" asp-for="@Model.Image" />
-            <span asp-validation-for="@Model.Image" class="text-danger"></span>
-        </div>
+            <div class="text-lg-start" style="padding-bottom: 20px;">
+                <label style="padding-left: 10px;" asp-for="@Model.ISBN"></label>
+                <input type="text" class="multiline-input" aria-required="true" asp-for="@Model.ISBN" />
+                <span asp-validation-for="@Model.ISBN" class="text-danger"></span>
+            </div>
+
+            <div class="text-lg-start" style="padding-bottom: 20px;">
+                <label style="padding-left: 10px;" asp-for="@Model.Image">Изображение</label>
+                <input type="text" class="multiline-input" aria-required="true" asp-for="@Model.Image" />
+                <span asp-validation-for="@Model.Image" class="text-danger"></span>
+            </div>
+            <div class="text-center" style="padding-top: 20px;">
+                <button id="register-submit" type="submit" class="btn btn-secondary">Редактиране</button>
+            </div>
+        </form>
     </div>
+</div>
 
-    @* <div style="padding-bottom: 20px">
-    <label>Categories</label>
-    @foreach (var item in Model.Request.Categories)
-    {
-    <input type="checkbox" checked="@(Model.Request.CategoryIds.Contains(item.Id))" value="@item.Id" name="Request.CategoryIds" />
-    <label>@item.Name</label>
-    }
-    </div> *@
-    <button type="submit" class="btn btn-danger" stype="width:130px" asp-route-id="@Model.Id" asp-action="Edit" asp-controller="Book">Save</button>
-</form>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

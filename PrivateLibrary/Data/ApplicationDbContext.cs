@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using PrivateLibrary.Data.Configurations;
 using PrivateLibrary.Data.Models;
-using System.Reflection.Emit;
 
 namespace PrivateLibrary.Data
 {
@@ -10,16 +9,15 @@ namespace PrivateLibrary.Data
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
-        {
-        }
+        { }
 
-        public DbSet<Book> Books { get; set; }
+        public DbSet<Book> Books { get; set; } = default!;
 
-        public DbSet<TakenBook> TakenBooks { get; set; }
+        public DbSet<TakenBook> TakenBooks { get; set; } = default!;
 
-        public DbSet<Employee> Employees { get; set; }
+        public DbSet<Employee> Employees { get; set; } = default!;
 
-        public DbSet<Reader> Readers { get; set; }
+        public DbSet<Reader> Readers { get; set; } = default!;
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -30,7 +28,7 @@ namespace PrivateLibrary.Data
                 .ValueGeneratedOnAdd();
             builder.Entity<Reader>()
                 .Property(e => e.Id)
-                .ValueGeneratedOnAdd(); ;
+                .ValueGeneratedOnAdd();
 
             builder.ApplyConfiguration(new UserConfiguration());
             builder.ApplyConfiguration(new BookConfiguration());

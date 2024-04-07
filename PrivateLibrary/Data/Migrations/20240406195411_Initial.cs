@@ -123,7 +123,7 @@ namespace PrivateLibrary.Data.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "dea12856-c198-4129-b3f3-b893d8395082", 0, "9177d797-43b1-4157-8d8c-57ba64b0aa43", "ApplicationUser", "admin@gmail.com", false, "Ivan", "Ivanov", false, null, "ADMIN@GMAIL.COM", "ADMIN", "AQAAAAEAACcQAAAAEPxYpTrmwfTqCViZKWSzNJY4bfDzqdI3Sd91CV47CPFrAsUy6ZYAa3YK2D7rctaV3g==", null, false, "fdb8b083-9529-4cf9-aa18-e75bf6925a0f", false, "Admin" });
+                values: new object[] { "dea12856-c198-4129-b3f3-b893d8395082", 0, "6ed4c7d2-f1ed-4f11-9bea-3490e8f07d92", "ApplicationUser", "admin@gmail.com", false, "Ivan", "Ivanov", false, null, "ADMIN@GMAIL.COM", "ADMIN", "AQAAAAEAACcQAAAAEOFq4AdD/n8vem+DC1e1N7VgBtd8Y3ytIOmus7RVVMewiJiNsBLk5+ylj9K8XX5Vng==", null, false, "ab6aa058-49b3-429d-888e-345349e48de9", false, "Admin" });
 
             migrationBuilder.InsertData(
                 table: "Books",
@@ -131,11 +131,11 @@ namespace PrivateLibrary.Data.Migrations
                 values: new object[,]
                 {
                     { 1, "Иван Вазов", 4.0, "9786192510244", "https://cdn.ozone.bg/media/catalog/product/cache/1/image/400x498/a4e40ebdc3e371adff845072e1c73f37/p/o/19071533ecfae7e0bc6c0df761f2b77a/pod-igoto-helikon-chervena-koritsa-30.jpg", false, "Под игото" },
-                    { 2, "Кристина Кръстева", 5.0, "9789543985289", "https://i2.helikon.bg/products/8656/20/208656/208656_b.jpg?t=1711110871", false, "Бойко, който винаги се завръща" },
+                    { 2, "Димитър Димов", 5.0, "9789547385289", "https://i4.helikon.bg/products/4697/14/144697/3613030_b.jpg", false, "Тютюн" },
                     { 3, "Слави Панайотов", 7.0, " 9786197511017", "https://cdn.ozone.bg/media/catalog/product/cache/1/image/400x498/a4e40ebdc3e371adff845072e1c73f37/t/o/e563b1cc68b7a08799821bf41c795b65/top-misteriite-na-balgariya-30.jpg", false, "Топ мистериите на България" },
-                    { 4, "Сергей Станишев", 2.0, "9789549232813", "https://knizhen-pazar.net/books/115/11511/1151187.jpg?size=23008", false, "Защото сме социалисти" },
+                    { 4, "Димитър Талев", 2.0, "9789549232813", "https://hermesbooks.bg/media/catalog/product/cache/e533a3e3438c08fe7c51cedd0cbec189/j/e/jelezniat_svetilnik_hrm_2_20200901160342.jpg", false, "Железният светилник" },
                     { 5, "Николай Хайтов", 5.0, " 9789540904382", "https://cdn.ozone.bg/media/catalog/product/cache/1/image/400x498/a4e40ebdc3e371adff845072e1c73f37/d/i/705d5f90e5fb5ee3725b8922b76073b7/sachineniya-v-17-toma---tom-2--divi-razkazi-31.jpg", false, "Диви Разкази" },
-                    { 6, "Слави Трифонов", 8.0, "9789542819387", "https://cdn.ozone.bg/media/catalog/product/cache/1/image/400x498/a4e40ebdc3e371adff845072e1c73f37/z/a/097e7a91150b40cf3a93c94e12dc282a/za-men-e-chest-31.jpg", false, "За мен е чест" },
+                    { 6, "Ф. Скот Фицджералд", 8.0, "9789542819387", "https://www.ciela.com/media/catalog/product/cache/332cf88b637d37883ec9cea105be873e/g/e/getsbi-koritsa.jpg", false, "Великият Гетсби" },
                     { 7, "Марк Аврелий", 5.0, "9789542838654", "https://cdn.ozone.bg/media/catalog/product/cache/1/image/400x498/a4e40ebdc3e371adff845072e1c73f37/m/a/770200d2b28cce79f22d92eb4b8c13ba/mark-avreliy--kam-sebe-si-luksozno-izdanie-30.jpg", false, "Към себе си" },
                     { 8, "Фьодор М. Достоевски", 9.0, "9789540907680", "https://cdn.ozone.bg/media/catalog/product/cache/1/image/400x498/a4e40ebdc3e371adff845072e1c73f37/p/r/fe0c5f747aa7d7feab7a3dd45388a570/prestaplenie-i-nakazanie-30.jpg", false, "Престъпление и наказание" },
                     { 9, "Джордж Оруел", 6.0, "9789542833734", "https://cdn.ozone.bg/media/catalog/product/cache/1/image/400x498/a4e40ebdc3e371adff845072e1c73f37/1/9/4a0dca141d62410d50fb2615ff15ad73/1984-siela-30.jpg", false, "1984" },

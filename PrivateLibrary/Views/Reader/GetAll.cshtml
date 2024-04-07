@@ -1,23 +1,53 @@
 ﻿@using PrivateLibrary.Data.Models;
-@model ICollection<Reader>
+@using PrivateLibrary.Models.Pagination
+@model PaginatedList<Reader>
 
-@foreach (var reader in Model)
-{
-    <div class="card" style=" padding: 25px 25px 25px 25px;">
-        <div class="container" style">
-            <p>
-                Име: @reader.User.FirstName
-            </p>
 
-            <p>
-                Фамилия: @reader.User.LastName
-
-            </p>
-
-            <p>
-                Email: @reader.User.Email
-            </p>
-        </div>
-        <a asp-action="Details" asp-controller="Reader" asp-route-userId="@reader.Id">Детайли</a>
+<div class="row align-items-center">
+    <div class="col-md-8">
+        <form asp-controller="Reader" asp-action="GetAll" method="get" style="padding:20px">
+            <input class="input-field" type="search" id="searchBox" name="search" value="@ViewBag.Search" placeholder="Име, Фамилия, Потребителско име, Email" />
+            <input class="input-btn" type="submit" value="Търси" />
+        </form>
     </div>
+    <div class="col-md-4 d-flex justify-content-end">
+        <a asp-controller="Reader" asp-action="Register" class="btn btn-secondary">Регистриране</a>
+    </div>
+</div>
+
+<table class="table table-hover">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">Собствено Име</th>
+            <th scope="col">Фамилия</th>
+            <th scope="col">Email</th>
+            <th scope="col">Телефон</th> 
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var reader in Model)
+        {
+            <tr>
+                <td>@reader.User.FirstName</td>
+                <td>@reader.User.LastName</td>
+                <td>@reader.User.Email</td>
+                <td>@reader.User.PhoneNumber</td>
+                <td>
+                    <a href="@Url.Action("Details", "Reader", new { userId = reader.Id })" class="btn btn-primary">Детайли</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+@{
+    var prevDisabled = Model.HasPreviousPage ? "" : "disable";
+    var nextDisabled = Model.HasNextPage ? "" : "disable";
 }
+<div class="pagination-ctr">
+    <a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex - 1)" class="@prevDisabled">Предишна</a>
+    <a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex + 1)" class="@nextDisabled">Следваща</a>
+</div>

@@ -22,3 +22,16 @@ body {
     cursor: not-allowed;
     filter: grayscale(100%);
 }
+
+.pagination-ctr {
+    display: flex;
+    justify-content: space-between;
+}
+
+    .pagination-ctr a {
+        text-decoration: none;
+    }
+
+.input-field {
+    width: 410px;
+}

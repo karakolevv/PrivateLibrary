@@ -19,40 +19,22 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                        @if (User?.Identity?.IsAuthenticated ?? false)
+                        @if (User?.IsInRole("Admin") ?? false)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Book" asp-action="Index">Книги</a>
+                                <a class="nav-link text-dark" asp-controller="Employee" asp-action="GetAll">Служители</a>
                             </li>
                         }
                         @if (User?.IsInRole("Admin") ?? false)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Employee" asp-action="Register">Регистриране на служител</a>
-                            </li>
-                        }
-                        @if (User?.IsInRole("Admin") ?? false)
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Employee" asp-action="GetAll">Всички служители</a>
-                            </li>
-                        }
-                        @if (User?.IsInRole("Admin") ?? false)
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Reader" asp-action="GetAll">Всички читатели</a>
+                                <a class="nav-link text-dark" asp-controller="Reader" asp-action="GetAll">Читатели</a>
                             </li>
                         }
                         @if (User != null && User.IsInRole("Admin") || User != null && User.IsInRole("Employee"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="TakenBook" asp-action="Index">Всички вземания</a>
+                                <a class="nav-link text-dark" asp-controller="TakenBook" asp-action="Index">Всички вземания</a>
                             </li>
                         }
                     </ul>

@@ -1,67 +1,46 @@
-﻿@using PrivateLibrary.Models.Reader;
-@model ReaderRegisterViewModel
+﻿@using PrivateLibrary.Models.Reader
+@model EditReaderViewModel
 
 @{
-    ViewData["Title"] = "Регистриране на читател";
+    ViewData["Title"] = "Редактиране на читател";
 }
 
 <h1 class="text-center">@ViewData["Title"]</h1>
-<link rel="stylesheet" href="~/css/submitButton.css" asp-append-version="true" />
-<link rel="stylesheet" href="~/css/submitButton.css" asp-append-version="true" />
 
 <div class="row">
     <div class="col-md-4 offset-md-4">
-        <form id="registerForm" method="post">
+        <form asp-action="Edit" method="post">
             <hr />
-
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
+            <input type="hidden" asp-for="Id"/>
             <div class="text-lg-start" style="padding-bottom: 20px;">
                 <label style="padding-left: 10px;" asp-for="@Model.FirstName">Собствено име</label>
                 <input class="form-control " autocomplete="First name" aria-required="true" asp-for="@Model.FirstName" />
                 <span asp-validation-for="@Model.FirstName" class="text-danger"></span>
             </div>
-
             <div class="text-lg-start" style="padding-bottom: 20px;">
                 <label style="padding-left: 10px;" asp-for="@Model.LastName">Фамилия</label>
                 <input class="form-control " autocomplete="Last Name" aria-required="true" asp-for="@Model.LastName" />
                 <span asp-validation-for="@Model.LastName" class="text-danger"></span>
             </div>
-
             <div class="text-lg-start" style="padding-bottom: 20px;">
                 <label style="padding-left: 10px;" asp-for="@Model.UserName">Потребителско име</label>
                 <input class="form-control" autocomplete="username" aria-required="true" asp-for="@Model.UserName" />
-                <span asp-validation-for="@Model.UserName" class="text-danger"></span> 
+                <span asp-validation-for="@Model.UserName" class="text-danger"></span>
             </div>
-
             <div class="text-lg-start" style="padding-bottom: 20px;">
                 <label style="padding-left: 10px;" asp-for="@Model.Email">Email</label>
                 <input class="form-control " autocomplete="username" aria-required="true" asp-for="@Model.Email" />
                 <span asp-validation-for="@Model.Email" class="text-danger"></span>
             </div>
-
             <div class="text-lg-start" style="padding-bottom: 20px;">
                 <label style="padding-left: 10px;" asp-for="@Model.PhoneNumber">Телефон</label>
                 <input class="form-control " autocomplete="username" aria-required="true" asp-for="@Model.PhoneNumber" />
                 <span asp-validation-for="@Model.PhoneNumber" class="text-danger"></span>
             </div>
-
-            <div class="text-lg-start" style="padding-bottom: 20px;">
-                <label style="padding-left: 10px;" asp-for="@Model.Password">Парола</label>
-                <input class="form-control" type="password" autocomplete="new-password" aria-required="true" asp-for="@Model.Password" />
-                <span asp-validation-for="@Model.Password" class="text-danger"></span>
-            </div>
-
-            <div class="text-lg-start" style="padding-bottom: 20px;">
-                <label style="padding-left: 10px;" asp-for="@Model.ConfirmPassword">Потвърждаване на паролата</label>
-                <input class="form-control" type="password" autocomplete="new-password" aria-required="true" asp-for="@Model.ConfirmPassword" />
-                <span asp-validation-for="@Model.ConfirmPassword" class="text-danger"></span>
-            </div>
-
             <div class="text-center" style="padding-top: 20px;">
-                <button id="register-submit" type="submit" class="btn btn-secondary">Регистриране</button>
+                <button id="edit-submit" type="submit" class="btn btn-secondary">Редактирай</button>
             </div>
-
         </form>
     </div>
 </div>

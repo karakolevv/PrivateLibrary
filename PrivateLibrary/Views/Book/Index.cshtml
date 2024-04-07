@@ -4,70 +4,54 @@
 
 <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="/resources/demos/style.css">
+<link href="~/css/books.css" rel="stylesheet" />
 
-<form asp-controller="Book" asp-action="Index" method="get">
-    <p>
-        <input type="search" id="searchBox" name="search" value="@ViewBag.Search" placeholder="Заглавие, автор, ISBN" />
-        <input type="submit" value="Търси" />
-    </p>
-</form>
-
-<p>Сортирай по:</p>
-<a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex)" asp-route-sortOrder="Заглавие (А-Я)">Заглавие (А-Я)</a>
-<a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex)" asp-route-sortOrder="Заглавие (Я-А)">Заглавие (Я-А)</a>
-<a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex)" asp-route-sortOrder="Автор (А-Я)">Автор (А-Я)</a>
-<a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex)" asp-route-sortOrder="Автор (Я-А)">Автор (Я-А)</a>
-
-@if (User.IsInRole("Admin"))
-{
-    <div>
-        <a asp-controller="Book" asp-action="Add" class="btn btn-success "> <i class="bi bi-person-dash-fill"></i>Add</a>
-    </div>
+@{
+    ViewData["Title"] = "Книги";
 }
 
-@foreach (var book in Model)
-{
-    <div class="card" style=" padding: 25px 25px 25px 25px;">
-        <div class="container" style">
-            <div class="row">
-                <div class="col-12 d-flex justify-content-center">
-                    <h4>
-                        <b>
-                            <text>@book.Title</text>
-                        </b>
-                    </h4>
-                </div>
+<h1 class="text-center">@ViewData["Title"]</h1>
+<hr />
+<div class="book-search-ctr">
+    <form asp-controller="Book" asp-action="Index" method="get">
+        <input class="input-field" type="search" id="searchBox" name="search" value="@ViewBag.Search" placeholder="Заглавие, автор, ISBN" />
+        <input class="input-btn" type="submit" value="Търси" />
+    </form>
+    <div class="sort">
+        <p>Сортирай по:</p>
+        <a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex)" asp-route-sortOrder="Заглавие (А-Я)">Заглавие (А-Я)</a>
+        <a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex)" asp-route-sortOrder="Заглавие (Я-А)">Заглавие (Я-А)</a>
+        <a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex)" asp-route-sortOrder="Автор (А-Я)">Автор (А-Я)</a>
+        <a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex)" asp-route-sortOrder="Автор (Я-А)">Автор (Я-А)</a>
+    </div>
+    @if (User.IsInRole("Admin"))
+    {
+        <a class="add-book-btn" asp-controller="Book" asp-action="Add" class="btn btn-success">Добави</a>
+    }
+</div>
+<hr />
+<div class="book-container">
+    @foreach (var book in Model)
+    {
+        <a asp-controller="Book" asp-action="Details" asp-route-id="@book.Id" class="book-card">
+            <div class="w-100">
+                <img class="card-img" src="@book.Image" />
             </div>
-
-            <p>
-                <img src="@book.Image" />
-            </p>
-
-            <p>
-                Author: @book.Author
-
-            </p>
-
-            <p>
-                IsTaken: @book.IsTaken
-
-            </p>
-
-            <p>
-                Cost: @book.CostPerDay
-
-            </p>
-
-            <a asp-controller="Book" asp-action="Details" asp-route-id="@book.Id" class="btn btn-danger "> <i class="bi bi-person-dash-fill"></i>Details</a>
-        </div>
-    </div>
-}
+            <div class="info-box">
+                <h4>@book.Title</h4>
+                <p>Автор: @book.Author</p>
+                <p>Статус: @(book.IsTaken ? "Взета" : "Свободна")</p>
+                <p>Цена за ден: @book.CostPerDay лв.</p>
+            </div>
+        </a>
+    }
+</div>
 
 @{
     var prevDisabled = Model.HasPreviousPage ? "" : "disable";
     var nextDisabled = Model.HasNextPage ? "" : "disable";
 }
-<div>
+<div class="pagination-ctr">
     <a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex - 1)" class="@prevDisabled">Предишна</a>
     <a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex + 1)" class="@nextDisabled">Следваща</a>
 </div>
@@ -86,7 +70,7 @@
                     response($.map(data, function (item) {
                         return {
                             label: item.title + ", " + item.author,
-                            value: item.title 
+                            value: item.title
                         };
                     }));
                 },
@@ -95,6 +79,6 @@
                 }
             });
         },
-        minLength: 1 
+        minLength: 1
     });
 </script>

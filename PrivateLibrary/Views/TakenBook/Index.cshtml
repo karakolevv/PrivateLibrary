@@ -1,31 +1,44 @@
 ﻿@using PrivateLibrary.Data.Models;
-@model ICollection<TakenBook>
+@using PrivateLibrary.Models.Pagination
+@model PaginatedList<TakenBook>
 
-@foreach (var book in Model)
-{
-    <div class="card" style=" padding: 25px 25px 25px 25px;">
-        <div class="container" style">
-            <div class="row">
-                <div class="col-12 d-flex justify-content-center">
-                    <h4>
-                        <b>
-                            <text>@book.Title</text>
-                        </b>
-                    </h4>
-                </div>
-            </div>
+<link href="~/css/books.css" rel="stylesheet" />
 
-            <p>
-                Author: @book.Author
+<form asp-controller="TakenBook" asp-action="Index" method="get" style="padding:20px">
+    <input class="input-field" type="search" id="searchBox" name="search" value="@ViewBag.Search" placeholder="Заглавие, Автор" />
+    <input class="input-btn" type="submit" value="Търси" />
+</form>
 
-            </p>
+<table class="table table-hover">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">Заглавие</th>
+            <th scope="col">Автор</th>
+            <th scope="col">Дата на връщане</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var takenBook in Model)
+        {
+            <tr>
+                <td>@takenBook.Title</td>
+                <td>@takenBook.Author</td>
+                <td>@takenBook.DateOfReturn.ToShortDateString()</td>
+                <td>
+                    <a href="@Url.Action("Details", "TakenBook", new { id = takenBook.Id })" class="btn btn-primary">Детайли</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
 
-            <p>
-                IsTaken: @book.DateOfReturn
-
-            </p>
-
-            <a asp-controller="TakenBook" asp-action="Details" asp-route-id="@book.Id" class="btn btn-danger "> <i class="bi bi-person-dash-fill"></i>Details</a>
-        </div>
-    </div>
+@{
+    var prevDisabled = Model.HasPreviousPage ? "" : "disable";
+    var nextDisabled = Model.HasNextPage ? "" : "disable";
 }
+<div class="pagination-ctr">
+    <a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex - 1)" class="@prevDisabled">Предишна</a>
+    <a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex + 1)" class="@nextDisabled">Следваща</a>
+</div>
+

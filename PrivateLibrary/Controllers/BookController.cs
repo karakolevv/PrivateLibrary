@@ -22,7 +22,7 @@ namespace PrivateLibrary.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index(string? search, string? sortOrder, int pageNumber = 1, int pageSize = 5)
+        public async Task<IActionResult> Index(string? search, string? sortOrder, int pageNumber = 1, int pageSize = 10)
         {
             var books = _context.Books
                 .Where(b => b.IsTaken == false)
@@ -60,7 +60,7 @@ namespace PrivateLibrary.Controllers
                 .Take(pageSize)
                 .ToListAsync();
 
-            var paginatedBooks = new PaginatedList<Book>(filtered, filtered.Count, pageNumber, pageSize);
+            var paginatedBooks = new PaginatedList<Book>(filtered, books.Count(), pageNumber, pageSize);
 
             return View(paginatedBooks);
         }
@@ -106,6 +106,7 @@ namespace PrivateLibrary.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int id)
         {
             var book = await _context.Books.FirstOrDefaultAsync(b => b.Id == id)
@@ -115,6 +116,7 @@ namespace PrivateLibrary.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(Book book)
         {
             if (!ModelState.IsValid)
@@ -123,9 +125,10 @@ namespace PrivateLibrary.Controllers
             _context.Books.Update(book);
             await _context.SaveChangesAsync();
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Details), new {id = book.Id});
         }
 
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {
             var book = await _context.Books.FirstOrDefaultAsync(b => b.Id == id)
@@ -137,6 +140,7 @@ namespace PrivateLibrary.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [Authorize(Roles = "Reader")]
         public async Task<IActionResult> Take(int id)
         {
             var book = await _context.Books.FirstOrDefaultAsync(b => b.Id == id)

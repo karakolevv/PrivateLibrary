@@ -1,15 +1,38 @@
 ﻿@using PrivateLibrary.Data.Models
 @model Reader
 
-<div>
-    <div class="card" style=" padding: 25px 25px 25px 25px;">
-        <div class="container">
-            <h4>
-                <b>
-                    @Model.User.FirstName
-                </b>
-            </h4>
+@{
+    ViewData["Title"] = "Детайли за читател";
+}
+
+<div class="container">
+    <h1 class="text-center">@ViewData["Title"]</h1>
+    <div class="row justify-content-center">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <hr />
+                <dl class="row">
+                    <dt class="col-sm-3">Име: </dt>
+                    <dd class="col-sm-9">@Model.User.FirstName</dd>
+
+                    <dt class="col-sm-3">Фамилия: </dt>
+                    <dd class="col-sm-9">@Model.User.LastName</dd>
+
+                    <dt class="col-sm-3">Потребителско име: </dt>
+                    <dd class="col-sm-9">@Model.User.UserName</dd>
+
+                    <dt class="col-sm-3">Email: </dt>
+                    <dd class="col-sm-9">@Model.User.Email</dd>
+
+                    <dt class="col-sm-3">Телефон: </dt>
+                    <dd class="col-sm-9">@Model.User.PhoneNumber</dd>
+                </dl>
+                @if (User.IsInRole("Admin"))
+                {
+                    <a asp-action="Delete" asp-controller="Reader" asp-route-userId="@Model.UserId" class="btn btn-danger">Изтриване</a>
+                }
+                <a asp-action="Edit" asp-controller="Reader" asp-route-userId="@Model.UserId" class="btn btn-success"> <i class="bi bi-person-dash-fill"></i>Редактиране</a>
+            </div>
         </div>
-        <a asp-action="Delete" asp-controller="Reader" asp-route-userId="@Model.UserId">Изтриване</a>
     </div>
 </div>

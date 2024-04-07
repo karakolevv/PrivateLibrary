@@ -1,8 +1,8 @@
-﻿﻿@using PrivateLibrary.Models;
+﻿@using PrivateLibrary.Models.Employee;
 @model EmployeeRegisterViewModel
 
 @{
-    ViewData["Title"] = "Register Employee";
+    ViewData["Title"] = "Регистриране на служител";
 }
 
 <h1 class="text-center">@ViewData["Title"]</h1>
@@ -14,24 +14,29 @@
             <hr />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="text-lg-start" style="padding-bottom: 20px;">
-                <label style="padding-left: 10px;" asp-for="@Model.FirstName">First name</label>
+                <label style="padding-left: 10px;" asp-for="@Model.FirstName">Собствено име</label>
                 <input class="form-control " autocomplete="First name" aria-required="true" asp-for="@Model.FirstName" />
                 <span asp-validation-for="@Model.FirstName" class="text-danger"></span>
             </div>
             <div class="text-lg-start" style="padding-bottom: 20px;">
-                <label style="padding-left: 10px;" asp-for="@Model.MiddleName">First name</label>
+                <label style="padding-left: 10px;" asp-for="@Model.MiddleName">Бащино име</label>
                 <input class="form-control " autocomplete="First name" aria-required="true" asp-for="@Model.MiddleName" />
                 <span asp-validation-for="@Model.MiddleName" class="text-danger"></span>
             </div>
             <div class="text-lg-start" style="padding-bottom: 20px;">
-                <label style="padding-left: 10px;" asp-for="@Model.LastName">Last Name</label>
+                <label style="padding-left: 10px;" asp-for="@Model.LastName">Фамилия</label>
                 <input class="form-control " autocomplete="Last Name" aria-required="true" asp-for="@Model.LastName" />
                 <span asp-validation-for="@Model.LastName" class="text-danger"></span>
             </div>
             <div class="text-lg-start" style="padding-bottom: 20px;">
-                <label style="padding-left: 10px;" asp-for="@Model.UserName">Username</label>
+                <label style="padding-left: 10px;" asp-for="@Model.UserName">Потребителско име</label>
                 <input class="form-control" autocomplete="username" aria-required="true" asp-for="@Model.UserName" />
                 <span asp-validation-for="@Model.UserName" class="text-danger"></span>
+            </div>
+            <div class="text-lg-start" style="padding-bottom: 20px;">
+                <label style="padding-left: 10px;" asp-for="@Model.EGN">ЕГН</label>
+                <input class="form-control" type="text" autocomplete="new-password" aria-required="true" asp-for="@Model.EGN" />
+                <span asp-validation-for="@Model.EGN" class="text-danger"></span>
             </div>
             <div class="text-lg-start" style="padding-bottom: 20px;">
                 <label style="padding-left: 10px;" asp-for="@Model.Email">Email</label>
@@ -39,27 +44,22 @@
                 <span asp-validation-for="@Model.Email" class="text-danger"></span>
             </div>
             <div class="text-lg-start" style="padding-bottom: 20px;">
-                <label style="padding-left: 10px;" asp-for="@Model.PhoneNumber">Phone Number</label>
+                <label style="padding-left: 10px;" asp-for="@Model.PhoneNumber">Телефон</label>
                 <input class="form-control " autocomplete="username" aria-required="true" asp-for="@Model.PhoneNumber" />
                 <span asp-validation-for="@Model.PhoneNumber" class="text-danger"></span>
             </div>
             <div class="text-lg-start" style="padding-bottom: 20px;">
-                <label style="padding-left: 10px;" asp-for="@Model.Password">Password</label>
+                <label style="padding-left: 10px;" asp-for="@Model.Password">Парола</label>
                 <input class="form-control" type="password" autocomplete="new-password" aria-required="true" asp-for="@Model.Password" />
                 <span asp-validation-for="@Model.Password" class="text-danger"></span>
             </div>
             <div class="text-lg-start" style="padding-bottom: 20px;">
-                <label style="padding-left: 10px;" asp-for="@Model.ConfirmPassword">Confirm Password</label>
+                <label style="padding-left: 10px;" asp-for="@Model.ConfirmPassword">Потвърждаване на паролата</label>
                 <input class="form-control" type="password" autocomplete="new-password" aria-required="true" asp-for="@Model.ConfirmPassword" />
                 <span asp-validation-for="@Model.ConfirmPassword" class="text-danger"></span>
             </div>
-            <div class="text-lg-start" style="padding-bottom: 20px;">
-                <label style="padding-left: 10px;" asp-for="@Model.EGN">EGN</label>
-                <input class="form-control" type="text" autocomplete="new-password" aria-required="true" asp-for="@Model.EGN" />
-                <span asp-validation-for="@Model.EGN" class="text-danger"></span>
-            </div>
             <div class="text-center" style="padding-top: 20px;">
-                <button id="register-submit" type="submit" class="btn btn-secondary">Register Employee</button>
+                <button id="register-submit" type="submit" class="btn btn-secondary">Регистриране</button>
             </div>
         </form>
     </div>

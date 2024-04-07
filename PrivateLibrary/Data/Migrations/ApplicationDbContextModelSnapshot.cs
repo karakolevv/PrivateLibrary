@@ -280,12 +280,12 @@ namespace PrivateLibrary.Data.Migrations
                         new
                         {
                             Id = 2,
-                            Author = "Кристина Кръстева",
+                            Author = "Димитър Димов",
                             CostPerDay = 5.0,
-                            ISBN = "9789543985289",
-                            Image = "https://i2.helikon.bg/products/8656/20/208656/208656_b.jpg?t=1711110871",
+                            ISBN = "9789547385289",
+                            Image = "https://i4.helikon.bg/products/4697/14/144697/3613030_b.jpg",
                             IsTaken = false,
-                            Title = "Бойко, който винаги се завръща"
+                            Title = "Тютюн"
                         },
                         new
                         {
@@ -300,12 +300,12 @@ namespace PrivateLibrary.Data.Migrations
                         new
                         {
                             Id = 4,
-                            Author = "Сергей Станишев",
+                            Author = "Димитър Талев",
                             CostPerDay = 2.0,
                             ISBN = "9789549232813",
-                            Image = "https://knizhen-pazar.net/books/115/11511/1151187.jpg?size=23008",
+                            Image = "https://hermesbooks.bg/media/catalog/product/cache/e533a3e3438c08fe7c51cedd0cbec189/j/e/jelezniat_svetilnik_hrm_2_20200901160342.jpg",
                             IsTaken = false,
-                            Title = "Защото сме социалисти"
+                            Title = "Железният светилник"
                         },
                         new
                         {
@@ -320,12 +320,12 @@ namespace PrivateLibrary.Data.Migrations
                         new
                         {
                             Id = 6,
-                            Author = "Слави Трифонов",
+                            Author = "Ф. Скот Фицджералд",
                             CostPerDay = 8.0,
                             ISBN = "9789542819387",
-                            Image = "https://cdn.ozone.bg/media/catalog/product/cache/1/image/400x498/a4e40ebdc3e371adff845072e1c73f37/z/a/097e7a91150b40cf3a93c94e12dc282a/za-men-e-chest-31.jpg",
+                            Image = "https://www.ciela.com/media/catalog/product/cache/332cf88b637d37883ec9cea105be873e/g/e/getsbi-koritsa.jpg",
                             IsTaken = false,
-                            Title = "За мен е чест"
+                            Title = "Великият Гетсби"
                         },
                         new
                         {
@@ -485,15 +485,15 @@ namespace PrivateLibrary.Data.Migrations
                         {
                             Id = "dea12856-c198-4129-b3f3-b893d8395082",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "516d66aa-715d-484d-baba-ffebc3719169",
+                            ConcurrencyStamp = "6ed4c7d2-f1ed-4f11-9bea-3490e8f07d92",
                             Email = "admin@gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAENwkYmpsrCQdEeHr8u/8yHS7GS1wj4pdD709GKe/j4FUTQNFEqrLVMCGp4Zai9o0MQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEOFq4AdD/n8vem+DC1e1N7VgBtd8Y3ytIOmus7RVVMewiJiNsBLk5+ylj9K8XX5Vng==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "999e6dd3-7a29-49f5-9aca-5c7dc0a7dc56",
+                            SecurityStamp = "ab6aa058-49b3-429d-888e-345349e48de9",
                             TwoFactorEnabled = false,
                             UserName = "Admin",
                             FirstName = "Ivan",

@@ -3,18 +3,29 @@
 @using PrivateLibrary.Data.Models
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
-@inject ApplicationDbContext Context
+@inject ApplicationDbContext DbContext
 
 <ul class="navbar-nav">
     @if (SignInManager.IsSignedIn(User))
     {
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Здравей, @User.Identity?.Name!</a>
-        </li>
+        var currentUserId = UserManager.GetUserId(User);     
         @if (User?.IsInRole("Reader") ?? false)
         {
-            var currentUserId = UserManager.GetUserId(User);
-            var reader = Context.Readers.FirstOrDefault(r => r.UserId == currentUserId);
+            var reader = DbContext.Readers.FirstOrDefault(r => r.UserId == currentUserId);
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-action="Details" asp-controller="Reader" asp-route-userId="@reader.Id">Акаунт</a>
+            </li>
+        }
+        @if (User?.IsInRole("Employee") ?? false)
+        {
+            var employee = DbContext.Employees.FirstOrDefault(r => r.UserId == currentUserId);
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-action="Details" asp-controller="Employee" asp-route-userId="@employee.Id">Здравей, @User.Identity?.Name!</a>
+            </li>
+        }
+        @if (User?.IsInRole("Reader") ?? false)
+        {
+            var reader = DbContext.Readers.FirstOrDefault(r => r.UserId == currentUserId);
             <li class="nav-item">
                 <a class="nav-link text-dark" asp-action="TakenBooks" asp-controller="Reader" asp-route-readerId="@reader.Id">Взети книги</a>
             </li>
@@ -23,15 +34,6 @@
             <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
                 <button type="submit" class="nav-link btn btn-link text-dark">Излизане</button>
             </form>
-        </li>
-    }
-    else
-    {
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-action="Register" asp-controller="Reader">Регистрация</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-action="Login" asp-controller="Account">Вход</a>
         </li>
     }
 </ul>

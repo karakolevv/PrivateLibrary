@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PrivateLibrary.Data;
 using PrivateLibrary.Data.Models;
-using PrivateLibrary.Models;
+using PrivateLibrary.Models.Employee;
 using PrivateLibrary.Models.Pagination;
 
 namespace PrivateLibrary.Controllers
@@ -12,19 +12,17 @@ namespace PrivateLibrary.Controllers
     public class EmployeeController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ApplicationDbContext _context;
 
-        public EmployeeController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, ApplicationDbContext context)
+        public EmployeeController(UserManager<ApplicationUser> userManager, ApplicationDbContext context)
         {
             _userManager = userManager;
-            _signInManager = signInManager;
             _context = context;
         }
 
         public async Task<IActionResult> Details(string userId)
         {
-            var employee = await _context.Readers
+            var employee = await _context.Employees
                  .Include(u => u.User)
                  .FirstOrDefaultAsync(e => e.Id == userId)
                  ?? throw new ArgumentNullException(nameof(userId));
@@ -46,7 +44,7 @@ namespace PrivateLibrary.Controllers
         {
             if (!ModelState.IsValid)
             {
-                TempData["error"] = "Unsuccessful register!";
+                TempData["error"] = "Неуспешна регистрация!";
                 return View(model);
             }
 
@@ -73,10 +71,11 @@ namespace PrivateLibrary.Controllers
                     User = user,
                     UserId = user.Id
                 };
+                
                 await _context.Employees.AddAsync(employee);
                 await _context.SaveChangesAsync();
-                TempData["success"] = "Successful login!";
-                return RedirectToAction("Login", "Account");
+
+                return Redirect(nameof(GetAll));
             }
 
             foreach (var item in result.Errors)
@@ -105,7 +104,7 @@ namespace PrivateLibrary.Controllers
                 .Take(pageSize)
                 .ToListAsync();
 
-            var paginatedEmployees = new PaginatedList<Employee>(filtered, filtered.Count, pageNumber, pageSize);
+            var paginatedEmployees = new PaginatedList<Employee>(filtered, employees.Count(), pageNumber, pageSize);
 
             return View(paginatedEmployees);
         }
@@ -140,6 +139,57 @@ namespace PrivateLibrary.Controllers
 
             return RedirectToAction(nameof(GetAll));
 
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(string userId)
+        {
+            var employee = await _context.Employees
+                    .Include(r => r.User)
+                    .FirstOrDefaultAsync(r => r.UserId == userId)
+                    ?? throw new ArgumentNullException(nameof(userId));
+
+            var model = new EditEmployeeViewModel
+            {
+                Id = employee.UserId,
+                FirstName = employee.User.FirstName,
+                MiddleName = employee.MiddleName,
+                LastName = employee.User.LastName,
+                UserName = employee.User.UserName,
+                EGN = employee.EGN,
+                PhoneNumber = employee.User.PhoneNumber,
+                Email = employee.User.Email
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(EditEmployeeViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var employee = await _context.Employees
+                    .Include(r => r.User)
+                    .FirstOrDefaultAsync(r => r.UserId == model.Id)
+                    ?? throw new ArgumentNullException();
+
+                employee.UserId = model.Id;
+                employee.User.FirstName = model.FirstName;
+                employee.MiddleName = model.MiddleName;
+                employee.User.LastName = model.LastName;
+                employee.User.UserName = model.UserName;
+                employee.EGN = model.EGN;
+                employee.User.PhoneNumber = model.PhoneNumber;
+                employee.User.Email = model.Email;
+
+                _context.Employees.Update(employee);
+                await _context.SaveChangesAsync();
+
+                return RedirectToAction(nameof(Details), new { userId = employee.Id });
+            }
+
+            return View(model);
         }
     }
 }

@@ -2,7 +2,7 @@
 @model LoginViewModel
 
 @{
-    ViewData["Title"] = "Log in";
+    ViewData["Title"] = "Вход";
 }
 <link rel="stylesheet" href="~/css/submitButton.css" asp-append-version="true" />
 <h1 class="text-center">@ViewData["Title"]</h1>
@@ -18,12 +18,12 @@
                     <span asp-validation-for="Email" class="text-danger"></span>
                 </div>
                 <div class="text-lg-start" style="padding-bottom: 20px;">
-                    <label asp-for="@Model.Password" class="form-label"></label>
+                    <label asp-for="@Model.Password" class="form-label">Парола</label>
                     <input asp-for="@Model.Password" type="password" class="form-control" autocomplete="current-password" aria-required="true" />
                     <span asp-validation-for="Password" class="text-danger"></span>
                 </div>
                 <div class="text-center">
-                    <button id="login-submit" type="submit" class="btn btn-primary">Log in</button>
+                    <button id="login-submit" type="submit" class="btn btn-primary">Влизане</button>
                 </div>
             </form>
         </section>

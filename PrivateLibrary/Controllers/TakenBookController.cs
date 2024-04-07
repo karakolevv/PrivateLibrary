@@ -1,6 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PrivateLibrary.Data;
+using PrivateLibrary.Data.Models;
+using PrivateLibrary.Models.Pagination;
+using System.Drawing.Printing;
+using static System.Reflection.Metadata.BlobBuilder;
 
 namespace PrivateLibrary.Controllers
 {
@@ -13,11 +17,24 @@ namespace PrivateLibrary.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string? search, int pageNumber = 1, int pageSize = 10)
         {
-            var takenBooks = await _context.TakenBooks
-                .ToListAsync();
-            return View(takenBooks);
+            var takenBooks = _context.TakenBooks.AsQueryable();
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                ViewBag.Search = search;
+                takenBooks = takenBooks.Where(tb => tb.Title.Contains(search) || tb.Author.Contains(search));
+            }
+
+            var filtered = await takenBooks
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+
+            var paginatedTakenBooks = new PaginatedList<TakenBook>(filtered, takenBooks.Count(), pageNumber, pageSize);
+
+            return View(paginatedTakenBooks);
         }
 
         public async Task<IActionResult> Details(int id)

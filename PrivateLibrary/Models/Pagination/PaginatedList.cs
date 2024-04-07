@@ -9,12 +9,12 @@
         public PaginatedList(List<T> items, int count, int pageIndex, int pageSize)
         {
             PageIndex = pageIndex;
-            TotalPages = (int)Math.Ceiling(count / (double)pageSize);
+            TotalPages = (int)Math.Ceiling((float)count / pageSize);
             this.AddRange(items);
         }
 
         public bool HasPreviousPage => (PageIndex > 1);
 
-        public bool HasNextPage => (PageIndex <= TotalPages);
+        public bool HasNextPage => (PageIndex < TotalPages);
     }
 }

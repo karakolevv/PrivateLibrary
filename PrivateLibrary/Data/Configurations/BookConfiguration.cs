@@ -25,12 +25,12 @@ namespace PrivateLibrary.Data.Configurations
             book = new Book
             {
                 Id = 2,
-                Title = "Бойко, който винаги се завръща",
-                Author = "Кристина Кръстева",
+                Title = "Тютюн",
+                Author = "Димитър Димов",
                 IsTaken = false,
                 CostPerDay = 5,
-                ISBN = "9789543985289",
-                Image = "https://i2.helikon.bg/products/8656/20/208656/208656_b.jpg?t=1711110871"
+                ISBN = "9789547385289",
+                Image = "https://i4.helikon.bg/products/4697/14/144697/3613030_b.jpg"
             };
             books.Add(book);
 
@@ -49,12 +49,12 @@ namespace PrivateLibrary.Data.Configurations
             book = new Book
             {
                 Id = 4,
-                Title = "Защото сме социалисти",
-                Author = "Сергей Станишев",
+                Title = "Железният светилник",
+                Author = "Димитър Талев",
                 IsTaken = false,
                 CostPerDay = 2,
                 ISBN = "9789549232813",
-                Image = "https://knizhen-pazar.net/books/115/11511/1151187.jpg?size=23008"
+                Image = "https://hermesbooks.bg/media/catalog/product/cache/e533a3e3438c08fe7c51cedd0cbec189/j/e/jelezniat_svetilnik_hrm_2_20200901160342.jpg"
             };
             books.Add(book);
 
@@ -73,12 +73,12 @@ namespace PrivateLibrary.Data.Configurations
             book = new Book
             {
                 Id = 6,
-                Title = "За мен е чест",
-                Author = "Слави Трифонов",
+                Title = "Великият Гетсби",
+                Author = "Ф. Скот Фицджералд",
                 IsTaken = false,
                 CostPerDay = 8,
                 ISBN = "9789542819387",
-                Image = "https://cdn.ozone.bg/media/catalog/product/cache/1/image/400x498/a4e40ebdc3e371adff845072e1c73f37/z/a/097e7a91150b40cf3a93c94e12dc282a/za-men-e-chest-31.jpg"
+                Image = "https://www.ciela.com/media/catalog/product/cache/332cf88b637d37883ec9cea105be873e/g/e/getsbi-koritsa.jpg"
             };
             books.Add(book);
 

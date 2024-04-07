@@ -38,7 +38,7 @@ namespace PrivateLibrary.Controllers
         {
             if (!ModelState.IsValid)
             {
-                TempData["error"] = "Unsuccessful login!";
+                TempData["error"] = "Неуспешно влизане!";
                 return View(model);
             }
 
@@ -46,8 +46,8 @@ namespace PrivateLibrary.Controllers
 
             if (user == null)
             {
-                ModelState.AddModelError("", "Unsuccessful login");
-                TempData["error"] = "Unsuccessful login!";
+                ModelState.AddModelError("", "Неуспешно влизане");
+                TempData["error"] = "Неуспешно влизане!";
                 return View(model);
             }
 
@@ -55,19 +55,17 @@ namespace PrivateLibrary.Controllers
 
             if (!result.Succeeded)
             {
-                ModelState.AddModelError("", "Unsuccessful login");
-                TempData["error"] = "Unsuccessful login!";
+                ModelState.AddModelError("", "Неуспешно влизане");
+                TempData["error"] = "Неуспешно влизане!";
                 return View(model);
             }
 
-            TempData["success"] = "Successful login!";
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }
 
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-            TempData["success"] = "You have been successfully loged out!";
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }
     }

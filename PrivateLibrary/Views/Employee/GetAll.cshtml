@@ -1,33 +1,54 @@
 ﻿@using PrivateLibrary.Data.Models;
-@model ICollection<Employee>
+@using PrivateLibrary.Models.Pagination
+@model PaginatedList<Employee>
 
-@foreach (var employee in Model)
-{
-    <div class="card" style=" padding: 25px 25px 25px 25px;">
-        <div class="container" style">
-            <p>
-                Име: @employee.User.FirstName
-            </p>
 
-            <p>
-                Фамилия: @employee.User.LastName
-
-            </p>
-
-            <p>
-                Email: @employee.User.Email
-            </p>
-
-            <p>
-                Дата на назначаване: @employee.HireDate
-
-            </p>
-
-            <p>
-                ЕГН: @employee.EGN
-
-            </p>
-        </div>
-        <a asp-action="Details" asp-controller="Employee" asp-route-userId="@employee.Id">Детайли</a>
+<div class="row align-items-center">
+    <div class="col-md-8">
+        <form asp-controller="Employee" asp-action="GetAll" method="get" style="padding:20px">
+            <input class="input-field" type="search" id="searchBox" name="search" value="@ViewBag.Search" placeholder=" Име, Презиме, Фамилия, Потребителско име, Email" />
+            <input class="input-btn" type="submit" value="Търси" />
+        </form>
     </div>
+    <div class="col-md-4 d-flex justify-content-end">
+        <a asp-controller="Employee" asp-action="Register" class="btn btn-secondary">Регистриране</a>
+    </div>
+</div>
+
+<table class="table table-hover">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">Собствено Име</th>
+            <th scope="col">Бащино име</th>
+            <th scope="col">Фамилия</th>
+            <th scope="col">Email</th>
+            <th scope="col">Телефон</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var employee in Model)
+        {
+            <tr>
+                <td>@employee.User.FirstName</td>
+                <td>@employee.MiddleName</td>
+                <td>@employee.User.LastName</td>
+                <td>@employee.User.Email</td>
+                <td>@employee.User.PhoneNumber</td>
+                <td>
+                    <a href="@Url.Action("Details", "Employee", new { userId = employee.Id })" class="btn btn-primary">Детайли</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+@{
+    var prevDisabled = Model.HasPreviousPage ? "" : "disable";
+    var nextDisabled = Model.HasNextPage ? "" : "disable";
 }
+<div class="pagination-ctr">
+    <a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex - 1)" class="@prevDisabled">Предишна</a>
+    <a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex + 1)" class="@nextDisabled">Следваща</a>
+</div>

@@ -1,31 +1,37 @@
 ﻿@using PrivateLibrary.Data.Models;
-@model ICollection<TakenBook>
+@using PrivateLibrary.Models.Pagination
+@model PaginatedList<TakenBook>
 
-@foreach (var book in Model)
-{
-    <div class="card" style=" padding: 25px 25px 25px 25px;">
-        <div class="container" style">
-            <div class="row">
-                <div class="col-12 d-flex justify-content-center">
-                    <h4>
-                        <b>
-                            <text>@book.Title</text>
-                        </b>
-                    </h4>
-                </div>
-            </div>
-
-            <p>
-                Author: @book.Author
-
-            </p>
-
-            <p>
-                IsTaken: @book.DateOfReturn
-
-            </p>
-
-            <a asp-controller="TakenBook" asp-action="Details" asp-route-id="@book.Id" class="btn btn-danger "> <i class="bi bi-person-dash-fill"></i>Details</a>
-        </div>
-    </div>
+<link href="~/css/books.css" rel="stylesheet" />
+@{
+    ViewData["Title"] = "Взети книги от читател";
 }
+
+<h1 class="text-center">@ViewData["Title"]</h1>
+<hr />
+<div class="book-container">
+    @foreach (var takenBook in Model)
+    {
+        <a asp-controller="TakenBook" asp-action="Details" asp-route-id="@takenBook.Id" class="book-card">
+            <div class="w-100">
+                <img class="card-img" src="@takenBook.Book.Image" />
+            </div>
+            <div class="info-box">
+                <h4>@takenBook.Title</h4>
+                <p>Автор: @takenBook.Author</p>
+                <p>Дата на връщане: @takenBook.DateOfReturn.ToShortDateString()</p>
+            </div>
+        </a>
+    }
+</div>
+
+@{
+    var prevDisabled = Model.HasPreviousPage ? "" : "disable";
+    var nextDisabled = Model.HasNextPage ? "" : "disable";
+}
+
+<div class="pagination-ctr">
+    <a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex - 1)" class="@prevDisabled">Предишна</a>
+    <a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex + 1)" class="@nextDisabled">Следваща</a>
+</div>
+
